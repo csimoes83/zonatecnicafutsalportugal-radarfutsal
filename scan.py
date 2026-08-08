@@ -102,7 +102,10 @@ SEGUNDA = re.compile(
     r"valpacosfutsalclube|amigos_de_cerva|viseu2001|gcrnunalvaresfutsal|"
     r"desportivojorgeantunes|modicus\.sandim|csmaritimomodalidades|cssaojoao|dinamo\.sanjoanense|"
     # 26/27: desceram da Liga Placard -> II Divisão
-    r"caxinas|adcrcaxinas|quinta dos lombos|lombos_futsal",
+    r"caxinas|adcrcaxinas|quinta dos lombos|lombos_futsal|"
+    # 26/27: subiram da III Divisão -> II Divisão
+    r"sassoeiros|cf_sassoeiros|pa[çc]os de ferreira|fcpf_futsal|amarense|aramarense|"
+    r"lusit[âa]nio|louros[ao]|lourosafutsal",
     re.I)
 
 # Espanha (4º nível)
