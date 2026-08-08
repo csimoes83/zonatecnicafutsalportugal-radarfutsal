@@ -48,6 +48,9 @@ FEEDS = [
     ("Português no Estrangeiro", "https://news.google.com/rss/search?q=futsal%20%28portugu%C3%AAs%20OR%20portuguesa%20OR%20luso%29%20%28Espanha%20OR%20It%C3%A1lia%20OR%20Fran%C3%A7a%20OR%20Kuwait%20OR%20Jap%C3%A3o%20OR%20Ar%C3%A1bia%20OR%20estrangeiro%20OR%20internacional%29&hl=pt-PT&gl=PT&ceid=PT:pt", None),
     ("Seleção Portugal", "https://news.google.com/rss/search?q=futsal%20sele%C3%A7%C3%A3o%20%28Portugal%20OR%20portuguesa%20OR%20%22Jorge%20Braz%22%20OR%20sub-19%20OR%20sub-21%29&hl=pt-PT&gl=PT&ceid=PT:pt", None),
     ("Calcio a 5", "https://news.google.com/rss/search?q=%22calcio%20a%205%22%20OR%20futsal%20%28Italia%20OR%20%22Serie%20A%22%20OR%20Napoli%20OR%20Feldi%20OR%20%22divisione%20calcio%22%29&hl=it&gl=IT&ceid=IT:it", None),
+    ("Futsal França", "https://news.google.com/rss/search?q=futsal%20%28France%20OR%20%22D1%20Futsal%22%20OR%20championnat%20OR%20Nantes%20OR%20%22coupe%20de%20France%20futsal%22%20OR%20ACCS%29&hl=fr&gl=FR&ceid=FR:fr", None),
+    ("Futsal Croácia", "https://news.google.com/rss/search?q=%28futsal%20OR%20%22mali%20nogomet%22%29%20%28Hrvatska%20OR%20%22Futsal%20Dinamo%22%20OR%20%22Novo%20Vrijeme%22%20OR%20reprezentacija%20OR%20Osijek%29&hl=hr&gl=HR&ceid=HR:hr", None),
+    ("Futsal Ásia", "https://news.google.com/rss/search?q=futsal%20%28Japan%20OR%20Iran%20OR%20%22AFC%20Futsal%22%20OR%20%22F.League%22%20OR%20%22Asian%20Cup%22%20OR%20Thailand%20OR%20Vietnam%29&hl=en&gl=US&ceid=US:en", None),
     ("CONMEBOL", "https://www.conmebol.com/feed/", "FUTSAL"),
     ("Google Alerts", "https://www.google.com/alerts/feeds/07340303412689524551/4521077332057732674", "TEMA"),
     ("Alerts Futsal", "https://www.google.com/alerts/feeds/07340303412689524551/6715931025412471738", "TEMA"),
@@ -192,7 +195,8 @@ INSTITUCIONAL = re.compile(
     r"\brfef\b|rfef_futsal|futsalrfef|"
     r"calcio a ?5|divisionecalcio|serie a[^.]{0,12}futsal|"
     r"uefa ?futsal|uefafutsal|futsal champions|uefafutsalchampionsleague|"
-    r"fifa futsal|futsal world cup|mundial de futsal", re.I)
+    r"fifa futsal|futsal world cup|mundial de futsal|"
+    r"futsal fran[çc]a|futsal cro[áa]cia|futsal [áa]sia", re.I)
 
 
 def fetch(url):
