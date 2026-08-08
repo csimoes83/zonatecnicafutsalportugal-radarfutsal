@@ -146,6 +146,11 @@ ESTRANGEIRO_FONTE = re.compile(
 CHAMPIONS = re.compile(
     r"bar[çc]a|fcbfutsal|palma|jimbee|elpozo|movistar|inter fs|napoli|kairat|"
     r"anderlecht|sporting|benfica|liga dos campe|champions", re.I)
+# clubes estrangeiros COM portugueses — passam sempre (extensível: juntar aqui)
+PT_CLUBES_FORA = re.compile(
+    r"piast|gliwice|differdange|shinagawa|semey|kprf|"
+    r"fcdifferdange03_futsal|shinagawacity_futsalclub|fcsemey|piastgliwicefutsal|sportclubkprf",
+    re.I)
 # português no estrangeiro (o ângulo forte do Carlos)
 PT_ESTRANGEIRO = re.compile(
     r"portugu[êe]s|portuguesa|\bluso\b|treinador portugu|internacional portugu|"
@@ -163,8 +168,8 @@ def estrangeiro_corta(it):
     src = it.get("source", "")
     if not ESTRANGEIRO_FONTE.search(src):
         return False                      # não é clube estrangeiro
-    if CHAMPIONS.search(src):
-        return False                      # clube da Champions -> mantém
+    if CHAMPIONS.search(src) or PT_CLUBES_FORA.search(src):
+        return False                      # Champions ou clube c/ portugueses -> mantém
     tit = it["title"]
     if PT_ESTRANGEIRO.search(tit + " " + src) or BR_MANTER.search(tit):
         return False                      # português no estrangeiro / LNF / seleção / saída
@@ -462,6 +467,7 @@ def main():
         if IMPRENSA.search(hay):      return 4, "pt,jornais"
         if INSTITUCIONAL.search(hay): return 3, "mundo,institucional"
         if CHAMPIONS.search(hay):     return 3, "mundo,institucional"  # Napoli/Kairat/…
+        if PT_CLUBES_FORA.search(hay):return 3, "mundo,institucional"  # clubes c/ portugueses
         if ESPANHA.search(hay):       return 2, "mundo,es"
         if BRASIL.search(hay):        return 2, "mundo,br"
         if PRIO_PT.search(hay):       return 1, "pt"
