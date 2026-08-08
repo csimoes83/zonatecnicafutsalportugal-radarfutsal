@@ -42,8 +42,8 @@ FEEDS = [
     ("Imprensa", "https://news.google.com/rss/search?q=futsal%20%28site%3Arecord.pt%20OR%20site%3Aojogo.pt%20OR%20site%3Amaisfutebol.iol.pt%20OR%20site%3Aabola.pt%20OR%20site%3Atvi24.iol.pt%20OR%20site%3Asapo.pt%20OR%20site%3Artp.pt%20OR%20site%3Adn.pt%20OR%20site%3Ajn.pt%29&hl=pt-PT&gl=PT&ceid=PT:pt", None),
     # Google News p/ encher níveis (o melhor do futsal, mesmo com IG calado):
     ("Futsal Feminino", "https://news.google.com/rss/search?q=futsal%20feminino%20%28Portugal%20OR%20Benfica%20OR%20Sporting%20OR%20%22liga%20feminina%22%29&hl=pt-PT&gl=PT&ceid=PT:pt", None),
-    ("Fútbol Sala", "https://news.google.com/rss/search?q=%22f%C3%BAtbol%20sala%22%20%28Primera%20OR%20LNFS%20OR%20Palma%20OR%20ElPozo%20OR%20Movistar%20OR%20Jimbee%20OR%20Cartagena%29&hl=es&gl=ES&ceid=ES:es", None),
-    ("Futsal Brasil", "https://news.google.com/rss/search?q=futsal%20%28LNF%20OR%20%22Liga%20Nacional%20de%20Futsal%22%20OR%20Magnus%20OR%20Corinthians%20OR%20%22sele%C3%A7%C3%A3o%20brasileira%22%29&hl=pt-BR&gl=BR&ceid=BR:pt", None),
+    ("Fútbol Sala", "https://news.google.com/rss/search?q=%22f%C3%BAtbol%20sala%22%20OR%20futsal%20%28Espa%C3%B1a%20OR%20Primera%20OR%20LNFS%20OR%20Palma%20OR%20ElPozo%20OR%20Movistar%20OR%20%22Bar%C3%A7a%22%20OR%20Jimbee%20OR%20Osasuna%20OR%20Valdepe%C3%B1as%20OR%20%22Ja%C3%A9n%22%20OR%20Cartagena%20OR%20Pe%C3%B1%C3%ADscola%29&hl=es&gl=ES&ceid=ES:es", None),
+    ("Futsal Brasil", "https://news.google.com/rss/search?q=futsal%20%28Brasil%20OR%20LNF%20OR%20%22Liga%20Nacional%22%20OR%20Magnus%20OR%20Pato%20OR%20Corinthians%20OR%20%22Atl%C3%A2ntico%22%20OR%20%22Carlos%20Barbosa%22%20OR%20%22Jaragu%C3%A1%22%20OR%20Joinville%20OR%20Cascavel%20OR%20%22sele%C3%A7%C3%A3o%20brasileira%22%29&hl=pt-BR&gl=BR&ceid=BR:pt", None),
     ("CONMEBOL", "https://www.conmebol.com/feed/", "FUTSAL"),
     ("Google Alerts", "https://www.google.com/alerts/feeds/07340303412689524551/4521077332057732674", "TEMA"),
     ("Alerts Futsal", "https://www.google.com/alerts/feeds/07340303412689524551/6715931025412471738", "TEMA"),
