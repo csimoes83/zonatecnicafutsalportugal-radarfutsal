@@ -39,6 +39,7 @@ FEEDS = [
     ("Famalicão", "https://www.fcfamalicao.pt/feed/", "FUTSAL"),
     ("zerozero", "https://www.zerozero.pt/rss/noticias.php", "FUTSAL"),
     ("Record", "https://www.record.pt/rss", "FUTSAL"),
+    ("Imprensa", "https://news.google.com/rss/search?q=futsal%20%28site%3Arecord.pt%20OR%20site%3Aojogo.pt%20OR%20site%3Amaisfutebol.iol.pt%20OR%20site%3Aabola.pt%29&hl=pt-PT&gl=PT&ceid=PT:pt", None),
     ("CONMEBOL", "https://www.conmebol.com/feed/", "FUTSAL"),
     ("Google Alerts", "https://www.google.com/alerts/feeds/07340303412689524551/4521077332057732674", "TEMA"),
     ("Alerts Futsal", "https://www.google.com/alerts/feeds/07340303412689524551/6715931025412471738", "TEMA"),
@@ -170,7 +171,7 @@ IMPRENSA = re.compile(
     r"\brecord\b|a bola|\babola\b|\bo jogo\b|\bojogo\b|maisfutebol|mais futebol|zerozero|"
     r"sapo desporto|rtp|futsalportugal|zona ?t[ée]cnica|zonatecnica|foco no futsal|"
     r"foconofutsal|futsal ?planet|futsalplanet1997|record_portugal|zerozeropt|"
-    r"gustavomunana|munhana|gustavo munana", re.I)
+    r"gustavomunana|munhana|gustavo munana|\bimprensa\b", re.I)
 
 # Institucional internacional (ligas/federações/confederações)
 INSTITUCIONAL = re.compile(
@@ -182,8 +183,11 @@ INSTITUCIONAL = re.compile(
 
 
 def fetch(url):
+    h = dict(UA)
+    if "news.google.com" in url:  # Google News (UE) exige cookie de consentimento
+        h["Cookie"] = "CONSENT=YES+cb.20210328-17-p0.en+FX+"
     try:
-        with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=20) as r:
+        with urllib.request.urlopen(urllib.request.Request(url, headers=h), timeout=20) as r:
             return r.read()
     except Exception:
         return None
