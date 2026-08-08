@@ -496,24 +496,15 @@ def main():
     itens = equilibrado
 
     itens.sort(key=lambda x: (x["prio"], x["when"]), reverse=True)
-    # GARANTE que cada nível aparece (nada vazio): competições PT (>=5) nunca cortadas
-    # + até 6 de cada nível restante + preenche por prioridade até MAX_ITENS
+    # PORTUGAL DOMINA o painel; o estrangeiro aparece mas apertado. Limite por nível
+    # (o mais recente de cada): PT (7-4,1) generoso, estrangeiro (3,2,0) curto.
     por_niv = {}
     for it in itens:
         por_niv.setdefault(it["prio"], []).append(it)
-    final, vistos = [], set()
-    for it in itens:              # 1) todas as competições PT
-        if it["prio"] >= 5:
-            final.append(it); vistos.add(id(it))
-    for p in (4, 3, 2, 1, 0):     # 2) garante até 6 de cada nível abaixo
-        for it in por_niv.get(p, [])[:6]:
-            if id(it) not in vistos:
-                final.append(it); vistos.add(id(it))
-    for it in itens:              # 3) preenche o resto por prioridade
-        if len(final) >= MAX_ITENS:
-            break
-        if id(it) not in vistos:
-            final.append(it); vistos.add(id(it))
+    LIM = {7: 22, 6: 10, 5: 8, 4: 12, 3: 3, 2: 4, 1: 8, 0: 2}
+    final = []
+    for p in sorted(por_niv, reverse=True):
+        final += por_niv[p][:LIM.get(p, 2)]
     final.sort(key=lambda x: (x["prio"], x["when"]), reverse=True)
     itens = final
 
