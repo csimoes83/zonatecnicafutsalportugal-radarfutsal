@@ -31,8 +31,9 @@ CARDS = [
 
 def render(itens, por_fonte, data, ok, nfeeds):
     # timeline (Novo, PT primeiro)
-    LB = {5: ' · 🟢 LIGA PLACARD', 4: ' · 🚺 LIGA FEMININA', 3: ' · 🔵 2ª DIVISÃO',
-          2: ' · 🌍 BR/ES', 1: ' · 🇵🇹 PT', 0: ''}
+    LB = {7: ' · 🟢 LIGA PLACARD', 6: ' · 🚺 LIGA FEMININA', 5: ' · 🔵 2ª DIVISÃO',
+          4: ' · 📰 IMPRENSA', 3: ' · 🏛️ INTERNACIONAL', 2: ' · 🌍 BR/ES',
+          1: ' · 🇵🇹 PT', 0: ''}
     tl = []
     for it in itens:
         w = it["when"].astimezone(LX)
@@ -136,6 +137,7 @@ def render(itens, por_fonte, data, ok, nfeeds):
  <button class="chip" data-f="pt">🇵🇹 PT</button>
  <button class="chip" data-f="es">🇪🇸 ES</button>
  <button class="chip" data-f="br">🇧🇷 BR</button>
+ <button class="chip" data-f="institucional">🏛️ Intl</button>
  <button class="chip" data-f="mundo">🌍 Mundo</button>
  <button class="chip" data-f="jornais">📰 Jornais</button>
  <button class="chip" data-f="social">𝕏 Redes</button>

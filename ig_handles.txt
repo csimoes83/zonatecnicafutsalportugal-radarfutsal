@@ -130,3 +130,9 @@ afckairat
 record_portugal
 # + feminino
 5womens.sports
+# + imprensa PT + institucional internacional
+abola
+ojogo
+rfef_futsal
+uefafutsalchampionsleague
+fifa
