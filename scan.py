@@ -459,6 +459,10 @@ def main():
         return 0, "mundo"
     for it in itens:
         it["prio"], it["ftag"] = classifica(it)
+        # marca extra "jornais" a QUALQUER item de fonte-jornal (mesmo que o nível
+        # seja Placard/2ª/etc), p/ o filtro Jornais mostrar toda a imprensa
+        if IMPRENSA.search(it.get("source", "")) and "jornais" not in it["ftag"]:
+            it["ftag"] += ",jornais"
 
     # equilíbrio IG (1/conta, teto global) MAS as competições PT (Placard/Feminina/2ª,
     # prio>=5) estão ISENTAS — mostra-se TUDO o que existir delas
