@@ -9,8 +9,8 @@ from datetime import datetime, timedelta, timezone
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
-JANELA_H = 48
-MAX_ITENS = 40
+JANELA_H = 72
+MAX_ITENS = 55
 
 FUTSAL_RE = re.compile(r"futsal|f[úu]tbol sala|calcio a 5|liga placard|futsalista", re.I)
 TEMA_RE = re.compile(
@@ -496,10 +496,26 @@ def main():
     itens = equilibrado
 
     itens.sort(key=lambda x: (x["prio"], x["when"]), reverse=True)
-    # competições PT (prio>=5) NUNCA cortadas; o resto preenche até MAX_ITENS
-    topo = [it for it in itens if it["prio"] >= 5]
-    resto = [it for it in itens if it["prio"] < 5]
-    itens = topo + resto[:max(MAX_ITENS - len(topo), 20)]
+    # GARANTE que cada nível aparece (nada vazio): competições PT (>=5) nunca cortadas
+    # + até 6 de cada nível restante + preenche por prioridade até MAX_ITENS
+    por_niv = {}
+    for it in itens:
+        por_niv.setdefault(it["prio"], []).append(it)
+    final, vistos = [], set()
+    for it in itens:              # 1) todas as competições PT
+        if it["prio"] >= 5:
+            final.append(it); vistos.add(id(it))
+    for p in (4, 3, 2, 1, 0):     # 2) garante até 6 de cada nível abaixo
+        for it in por_niv.get(p, [])[:6]:
+            if id(it) not in vistos:
+                final.append(it); vistos.add(id(it))
+    for it in itens:              # 3) preenche o resto por prioridade
+        if len(final) >= MAX_ITENS:
+            break
+        if id(it) not in vistos:
+            final.append(it); vistos.add(id(it))
+    final.sort(key=lambda x: (x["prio"], x["when"]), reverse=True)
+    itens = final
 
     LX = timezone(timedelta(hours=1))  # hora de Lisboa (verão)
     stamp = agora.astimezone(LX)
