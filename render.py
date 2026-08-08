@@ -159,7 +159,7 @@ def render(itens, por_fonte, data, ok, nfeeds):
   var s=(q.value||'').toLowerCase().trim();
   var f=document.querySelector('.chip.active').dataset.f;
   document.querySelectorAll('#timeline .card').forEach(function(c){{
-   var okF=(f==='all')||(c.dataset.f||'').indexOf(f)>=0||f==='mundo';
+   var okF=(f==='all')||(c.dataset.f||'').split(',').indexOf(f)>=0;
    var okS=!s||c.textContent.toLowerCase().indexOf(s)>=0;
    c.classList.toggle('hidden', !(okF&&okS));
   }});

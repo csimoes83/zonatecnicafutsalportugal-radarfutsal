@@ -84,7 +84,7 @@ PRIO_PT = re.compile(
 # LIGA PLACARD — prioridade máxima. Nomes dos 12 clubes 26/27 + as contas de IG deles.
 # Casa com o título OU a fonte (apanha posts dos clubes mesmo sem o nome na legenda).
 PLACARD = re.compile(
-    r"liga placard|"
+    r"liga placard|ligaplacard|"
     r"\bsporting\b|benfica|sp\.? ?braga|sc ?braga|\bbraga\b|le[õo]es (de )?porto salvo|porto salvo|"
     r"el[ée]ctrico|torreense|fund[ãa]o|famalic[ãa]o|z[êe]zere|portimonense|rio ave|\bupvn\b|"
     r"sportingmodalidades|modalidadesslb|scbragamodalidades|leoesportosalvo|electricofc_oficial|"
@@ -461,8 +461,9 @@ def main():
         if SEGUNDA.search(hay):       return 5, "pt,segunda"
         if IMPRENSA.search(hay):      return 4, "pt,jornais"
         if INSTITUCIONAL.search(hay): return 3, "mundo,institucional"
-        if ESPANHA.search(hay):       return 2, "es"
-        if BRASIL.search(hay):        return 2, "br"
+        if CHAMPIONS.search(hay):     return 3, "mundo,institucional"  # Napoli/Kairat/…
+        if ESPANHA.search(hay):       return 2, "mundo,es"
+        if BRASIL.search(hay):        return 2, "mundo,br"
         if PRIO_PT.search(hay):       return 1, "pt"
         return 0, "mundo"
     for it in itens:
