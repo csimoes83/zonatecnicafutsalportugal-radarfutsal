@@ -140,7 +140,7 @@ ESTRANGEIRO_FONTE = re.compile(
     r"palma|elpozo|movistar|intermovistar|jimbee|cartagena|valdepe|osasuna|\bxota\b|"
     r"pe[ñn][íi]scola|santa coloma|ja[ée]n|ribera navarra|ciudad del vino|fcbfutsal|"
     r"magnus|pato|atl[âa]ntico|acbf|carlos barbosa|jaragu|marreco|krona|joinville|"
-    r"corinthians|cascavel|foz.?cataratas|napoli|kairat|kprf|dinamo|piast|differdange|"
+    r"corinthians|cascavel|foz.?cataratas|napoli|kairat|kprf|futsal dinamo|piast|differdange|"
     r"shinagawa|semey|ekstraklasa|fsciudaddelvino|riberanavarrafs", re.I)
 # clubes tipicamente na UEFA Futsal Champions League (mantêm-se sempre)
 CHAMPIONS = re.compile(
@@ -164,16 +164,11 @@ BR_MANTER = re.compile(
 
 
 def estrangeiro_corta(it):
-    """True se é um clube estrangeiro sem relevância editorial (a cortar)."""
-    src = it.get("source", "")
-    if not ESTRANGEIRO_FONTE.search(src):
-        return False                      # não é clube estrangeiro
-    if CHAMPIONS.search(src) or PT_CLUBES_FORA.search(src):
-        return False                      # Champions ou clube c/ portugueses -> mantém
-    tit = it["title"]
-    if PT_ESTRANGEIRO.search(tit + " " + src) or BR_MANTER.search(tit):
-        return False                      # português no estrangeiro / LNF / seleção / saída
-    return True
+    """DESLIGADO (pedido do Carlos: "todas as opções a dar e com notícias").
+    Todos os clubes passam a aparecer no seu nível; o limite de 1 post/conta +
+    teto global de IG evita a inundação. As regexes CHAMPIONS/PT_CLUBES_FORA/
+    ESPANHA/BRASIL continuam a ser usadas para classificar por nível."""
+    return False
 
 # Imprensa principal + sites de futsal PT (a seguir às competições)
 IMPRENSA = re.compile(
@@ -482,7 +477,7 @@ def main():
     # equilíbrio IG (1/conta, teto global) MAS as competições PT (Placard/Feminina/2ª,
     # prio>=5) estão ISENTAS — mostra-se TUDO o que existir delas
     IG_MAX_POR_CONTA = 1
-    IG_MAX_TOTAL = 16
+    IG_MAX_TOTAL = 22
     vistos_ig, ig_total, equilibrado = {}, 0, []
     for it in sorted(itens, key=lambda x: x["when"], reverse=True):
         if it["source"].startswith("IG") and it["prio"] < 5:
