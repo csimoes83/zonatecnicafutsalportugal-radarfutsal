@@ -66,7 +66,11 @@ RUIDO = re.compile(
     r"de base\b|futsal de base|categorias de base|entrada gratuita|rel[âa]mpago|"
     r"unitedfutsal|united futsal|world futsal champ|liga usuluteca|santafesina|"
     r"bauru cup|araucária|arapiraca|traipu|citadino|distrital amador|"
-    r"ver[ãa]o|f[ée]rias|escolar\b|amistoso beneficente|torneio solid[áa]rio",
+    r"ver[ãa]o|f[ée]rias|escolar\b|amistoso beneficente|torneio solid[áa]rio|"
+    # outros desportos das contas multi-modalidades (Braga/Benfica/Sporting…): não é futsal
+    r"voleibol|volleyball|#volei|andebol|handball|h[óo]quei|hockey|basquet|basketball|"
+    r"nata[çc][ãa]o|atletismo|r[aâ]guebi|\brugby\b|ciclismo|t[ée]nis de mesa|ginm[áa]stica|"
+    r"gin[áa]stica|patinagem|triatlo|\bp[óo]lo aqu[áa]tico|badminton|karat[ée]|jud[oó]",
     re.I)
 
 # prioridade editorial do Carlos (PT + PT no estrangeiro + Placard + relevante)
