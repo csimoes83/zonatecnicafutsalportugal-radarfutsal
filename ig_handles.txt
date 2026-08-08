@@ -136,3 +136,6 @@ ojogo
 rfef_futsal
 uefafutsalchampionsleague
 fifa
+# + sites futsal (Futsal Planet, zerozero futsal)
+futsalplanet
+zerozerofutsal
