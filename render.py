@@ -31,11 +31,15 @@ CARDS = [
 
 def render(itens, por_fonte, data, ok, nfeeds):
     # timeline (Novo, PT primeiro)
+    LB = {5: ' · 🟢 LIGA PLACARD', 4: ' · 🚺 LIGA FEMININA', 3: ' · 🔵 2ª DIVISÃO',
+          2: ' · 🌍 BR/ES', 1: ' · 🇵🇹 PT', 0: ''}
     tl = []
     for it in itens:
         w = it["when"].astimezone(LX)
-        tag = ' · 🇵🇹 PARA TI' if it.get("prio") else ''
-        tl.append(f'''    <div class="card" data-f="{'pt' if it.get('prio') else 'mundo'}">
+        p = it.get("prio", 0)
+        tag = LB.get(p, '')
+        df = it.get("ftag", "mundo")
+        tl.append(f'''    <div class="card" data-f="{df}">
       <div class="k">{w:%H:%M} · {esc(it["source"])}{tag}</div>
       <h3><a href="{esc(it["link"])}" target="_blank" rel="noopener">{esc(it["title"])}</a></h3>
       <p>{esc(it["source"])} · {w:%d/%m %H:%M}</p>
@@ -126,6 +130,9 @@ def render(itens, por_fonte, data, ok, nfeeds):
  <input id="q" class="search" type="search" placeholder="🔍 Procurar clube, jogador, país…">
  <button id="refresh" class="chip refresh" title="Recarregar a recolha mais recente">↻ Atualizar</button>
  <button class="chip active" data-f="all">Tudo</button>
+ <button class="chip" data-f="placard">🟢 Placard</button>
+ <button class="chip" data-f="feminina">🚺 Feminina</button>
+ <button class="chip" data-f="segunda">🔵 2ª Div</button>
  <button class="chip" data-f="pt">🇵🇹 PT</button>
  <button class="chip" data-f="es">🇪🇸 ES</button>
  <button class="chip" data-f="br">🇧🇷 BR</button>

@@ -76,6 +76,41 @@ PRIO_PT = re.compile(
     r"barcelona|bar[çc]a|palma|elpozo|movistar|jimbee|rfef|lnfs|uefa futsal|champions|"
     r"ricardinho|bruno coelho|jo[ãa]o matos|higor|f[úu]tbol sala", re.I)
 
+# LIGA PLACARD — prioridade máxima. Nomes dos 12 clubes 26/27 + as contas de IG deles.
+# Casa com o título OU a fonte (apanha posts dos clubes mesmo sem o nome na legenda).
+PLACARD = re.compile(
+    r"liga placard|"
+    r"\bsporting\b|benfica|sp\.? ?braga|sc ?braga|\bbraga\b|le[õo]es (de )?porto salvo|porto salvo|"
+    r"el[ée]ctrico|torreense|fund[ãa]o|famalic[ãa]o|z[êe]zere|portimonense|rio ave|\bupvn\b|"
+    r"sportingmodalidades|modalidadesslb|scbragamodalidades|leoesportosalvo|electricofc_oficial|"
+    r"scutorreensemodalidades|adfundao|fcfamalicaomodalidades|scfz_futsal|portimonense_futsal|"
+    r"maisrioave|oficial_upvn", re.I)
+
+# Liga Feminina Placard (2º nível)
+FEMININA = re.compile(
+    r"liga feminina|feminin[oa]s?|femenin[oa]s?|\bwomen'?s?\b|futebol feminino|"
+    r"futsalfemininonews|forum\.futsal\.feminino|womensfutsalworld|5womens\.sports|sefutbolfem",
+    re.I)
+
+# 2ª Divisão Nacional (3º nível)
+SEGUNDA = re.compile(
+    r"2[.ªaº]? ?divis[ãa]o|segunda divis[ãa]o|ii divis[ãa]o|ii nacional|2ª nacional|"
+    r"subida à ii|acesso à ii", re.I)
+
+# Espanha (4º nível)
+ESPANHA = re.compile(
+    r"\bpalma\b|elpozo|el pozo|movistar|inter fs|jimbee|cartagena|valdepe|osasuna|\bxota\b|"
+    r"pe[ñn][íi]scola|santa coloma|ja[ée]n|ribera navarra|ciudad del vino|\brfef\b|lnfs|"
+    r"f[úu]tbol sala|palmafutsaloficial|intermovistar|jimbeecartagena|jaenfutbolsala|c\.d\.xota|"
+    r"riberanavarrafs|fsciudaddelvino|futsalrfef|fcbfutsal", re.I)
+
+# Brasil (4º nível)
+BRASIL = re.compile(
+    r"\blnf\b|magnus|pato futsal|atl[âa]ntico|carlos barbosa|\bacbf\b|jaragu[áa]|marreco|krona|"
+    r"joinville|corinthians|cascavel|foz.?cataratas|lnfoficial|magnusfutsal|patofutsaloficial|"
+    r"atlanticofutsal|acbffutsal|jaraguafutsal|marrecofutsaloficial|jec\.krona|fozcataratas_futsal",
+    re.I)
+
 
 def fetch(url):
     try:
@@ -335,13 +370,27 @@ def main():
         uniq.setdefault(it["key"], it)
     itens = list(uniq.values())
 
-    # equilíbrio: no máximo 1 post por conta de IG e um teto global de IG,
-    # para o Instagram não afogar as notícias curadas dos feeds/jornais
+    # PRIORIDADE editorial (maior = topo). Casa com título OU fonte (@conta):
+    #  5 Liga Placard (M) · 4 Liga Feminina · 3 2ª Divisão · 2 Espanha/Brasil · 1 PT · 0 resto
+    def classifica(it):
+        hay = it["title"] + " " + it.get("source", "")
+        if FEMININA.search(hay): return 4, "pt,feminina"
+        if PLACARD.search(hay):  return 5, "pt,placard"
+        if SEGUNDA.search(hay):  return 3, "pt,segunda"
+        if ESPANHA.search(hay):  return 2, "es"
+        if BRASIL.search(hay):   return 2, "br"
+        if PRIO_PT.search(hay):  return 1, "pt"
+        return 0, "mundo"
+    for it in itens:
+        it["prio"], it["ftag"] = classifica(it)
+
+    # equilíbrio IG (1/conta, teto global) MAS as competições PT (Placard/Feminina/2ª,
+    # prio>=3) estão ISENTAS — mostra-se TUDO o que existir delas
     IG_MAX_POR_CONTA = 1
-    IG_MAX_TOTAL = 14
+    IG_MAX_TOTAL = 16
     vistos_ig, ig_total, equilibrado = {}, 0, []
     for it in sorted(itens, key=lambda x: x["when"], reverse=True):
-        if it["source"].startswith("IG"):
+        if it["source"].startswith("IG") and it["prio"] < 3:
             if ig_total >= IG_MAX_TOTAL:
                 continue
             if vistos_ig.get(it["source"], 0) >= IG_MAX_POR_CONTA:
@@ -351,11 +400,11 @@ def main():
         equilibrado.append(it)
     itens = equilibrado
 
-    for it in itens:
-        it["prio"] = 1 if PRIO_PT.search(it["title"]) else 0
-    # PT-relevante primeiro; dentro de cada grupo, mais recente primeiro
     itens.sort(key=lambda x: (x["prio"], x["when"]), reverse=True)
-    itens = itens[:MAX_ITENS]
+    # competições PT (prio>=3) NUNCA cortadas; o resto preenche até MAX_ITENS
+    topo = [it for it in itens if it["prio"] >= 3]
+    resto = [it for it in itens if it["prio"] < 3]
+    itens = topo + resto[:max(MAX_ITENS - len(topo), 14)]
 
     LX = timezone(timedelta(hours=1))  # hora de Lisboa (verão)
     stamp = agora.astimezone(LX)
