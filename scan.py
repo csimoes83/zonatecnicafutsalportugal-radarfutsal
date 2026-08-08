@@ -122,6 +122,18 @@ BRASIL = re.compile(
     r"atlanticofutsal|acbffutsal|jaraguafutsal|marrecofutsaloficial|jec\.krona|fozcataratas_futsal",
     re.I)
 
+# Brasil: só mostrar se for LNF ou seleção. Filtra posts CUJA FONTE é um clube BR
+# (não filtra por título, p/ não cortar notícias PT que mencionem clubes brasileiros).
+BR_FONTE = re.compile(
+    r"magnus|pato|atl[âa]ntico|acbf|carlos barbosa|jaragu|marreco|krona|joinville|"
+    r"corinthians|cascavel|foz.?cataratas", re.I)
+BR_MANTER = re.compile(
+    r"\blnf\b|sele[çc][ãa]o|canarinh|verde.?amarel|"
+    # saídas para o estrangeiro (o ângulo do Carlos)
+    r"deixa|de sa[íi]da|despede|adeus|rumo a|vai para|nova casa|se marcha|farewell|"
+    r"de partida|assina pel|\beuropa\b|portugal|espanha|it[áa]lia|kuwait|jap[ãa]o|emirados",
+    re.I)
+
 # Imprensa principal + sites de futsal PT (a seguir às competições)
 IMPRENSA = re.compile(
     r"\brecord\b|a bola|\babola\b|\bo jogo\b|\bojogo\b|maisfutebol|mais futebol|zerozero|"
@@ -364,6 +376,8 @@ def main():
                 continue
             if RUIDO.search(it["title"]):
                 continue
+            if BR_FONTE.search(it.get("source", "")) and not BR_MANTER.search(it["title"]):
+                continue  # Brasil só se LNF/seleção/saída p/ estrangeiro
             frases = [m.group(0).lower() for m in NOME_RE.finditer(it["title"])]
             if proprio and any(f in proprio for f in frases if len(f) >= 9):
                 continue
@@ -383,6 +397,8 @@ def main():
                 continue
             if req and not req.search(it["title"]):
                 continue
+            if BR_FONTE.search(it.get("source", "")) and not BR_MANTER.search(it["title"]):
+                continue  # Brasil só se LNF/seleção/saída p/ estrangeiro
             por_fonte.setdefault(name, []).append(it)  # p/ tabelas Por fonte
             frases = [m.group(0).lower() for m in NOME_RE.finditer(it["title"])]
             if proprio and any(f in proprio for f in frases if len(f) >= 9):
