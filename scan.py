@@ -92,10 +92,16 @@ FEMININA = re.compile(
     r"futsalfemininonews|forum\.futsal\.feminino|womensfutsalworld|5womens\.sports|sefutbolfem",
     re.I)
 
-# 2ª Divisão Nacional (3º nível)
+# 2ª Divisão Nacional (3º nível) — texto + contas IG dos clubes (II Div 25/26, via zerozero;
+# NÃO inclui Portimonense/UPVN/Leões P.Salvo, que subiram à Placard em 26/27)
 SEGUNDA = re.compile(
     r"2[.ªaº]? ?divis[ãa]o|segunda divis[ãa]o|ii divis[ãa]o|ii nacional|2ª nacional|"
-    r"subida à ii|acesso à ii", re.I)
+    r"subida à ii|acesso à ii|"
+    r"_boavistafcfutsal_|scbarbarense|acdladoeiro_futsal|arbbesperanca|burinhosafutsal|"
+    r"albufeirafutsalclube69|reguilastires|osbelenenses|futsal_arsenalclubemaia|"
+    r"valpacosfutsalclube|amigos_de_cerva|viseu2001|gcrnunalvaresfutsal|"
+    r"desportivojorgeantunes|modicus\.sandim|csmaritimomodalidades|cssaojoao|dinamo\.sanjoanense",
+    re.I)
 
 # Espanha (4º nível)
 ESPANHA = re.compile(
