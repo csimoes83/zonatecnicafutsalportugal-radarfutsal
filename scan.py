@@ -47,6 +47,7 @@ FEEDS = [
     ("Futsal Portugal", "https://news.google.com/rss/search?q=futsal%20Portugal&hl=pt-PT&gl=PT&ceid=PT:pt", None),
     ("Português no Estrangeiro", "https://news.google.com/rss/search?q=futsal%20%28portugu%C3%AAs%20OR%20portuguesa%20OR%20luso%29%20%28Espanha%20OR%20It%C3%A1lia%20OR%20Fran%C3%A7a%20OR%20Kuwait%20OR%20Jap%C3%A3o%20OR%20Ar%C3%A1bia%20OR%20estrangeiro%20OR%20internacional%29&hl=pt-PT&gl=PT&ceid=PT:pt", None),
     ("Seleção Portugal", "https://news.google.com/rss/search?q=futsal%20sele%C3%A7%C3%A3o%20%28Portugal%20OR%20portuguesa%20OR%20%22Jorge%20Braz%22%20OR%20sub-19%20OR%20sub-21%29&hl=pt-PT&gl=PT&ceid=PT:pt", None),
+    ("Calcio a 5", "https://news.google.com/rss/search?q=%22calcio%20a%205%22%20OR%20futsal%20%28Italia%20OR%20%22Serie%20A%22%20OR%20Napoli%20OR%20Feldi%20OR%20%22divisione%20calcio%22%29&hl=it&gl=IT&ceid=IT:it", None),
     ("CONMEBOL", "https://www.conmebol.com/feed/", "FUTSAL"),
     ("Google Alerts", "https://www.google.com/alerts/feeds/07340303412689524551/4521077332057732674", "TEMA"),
     ("Alerts Futsal", "https://www.google.com/alerts/feeds/07340303412689524551/6715931025412471738", "TEMA"),
