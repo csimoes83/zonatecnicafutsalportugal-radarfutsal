@@ -86,10 +86,14 @@ PLACARD = re.compile(
     r"scutorreensemodalidades|adfundao|fcfamalicaomodalidades|scfz_futsal|portimonense_futsal|"
     r"maisrioave|oficial_upvn", re.I)
 
-# Liga Feminina Placard (2º nível)
+# Liga Feminina Placard (2º nível) — texto + contas dos clubes femininos (zerozero 25/26 + subidas)
+# NÃO inclui contas partilhadas (Benfica/Leões P.Salvo/Nun'Álvares/Sporting): essas só pelo texto,
+# senão marcava os jogos masculinos delas como femininos.
 FEMININA = re.compile(
     r"liga feminina|feminin[oa]s?|femenin[oa]s?|\bwomen'?s?\b|futebol feminino|"
-    r"futsalfemininonews|forum\.futsal\.feminino|womensfutsalworld|5womens\.sports|sefutbolfem",
+    r"futsalfemininonews|forum\.futsal\.feminino|womensfutsalworld|5womens\.sports|sefutbolfem|"
+    r"atleticocp|santa_luzia_futebolclube|futsalfeijo|gdarvore1975|novasementefutsal|"
+    r"fcaguiassantamarta|u\.a\.povoense|maiafutsal|futsal feij[óo]|novasemente",
     re.I)
 
 # 2ª Divisão Nacional (3º nível) — texto + contas IG dos clubes (II Div 25/26, via zerozero;
@@ -122,23 +126,50 @@ BRASIL = re.compile(
     r"atlanticofutsal|acbffutsal|jaraguafutsal|marrecofutsaloficial|jec\.krona|fozcataratas_futsal",
     re.I)
 
-# Brasil: só mostrar se for LNF ou seleção. Filtra posts CUJA FONTE é um clube BR
-# (não filtra por título, p/ não cortar notícias PT que mencionem clubes brasileiros).
-BR_FONTE = re.compile(
+# Filtro de clubes ESTRANGEIROS (não afogar o painel). Um post cuja FONTE é um clube
+# de fora só passa se: for clube da Liga dos Campeões, OU envolver um português no
+# estrangeiro, OU (Brasil) for LNF/seleção/saída p/ estrangeiro. Filtra pela FONTE
+# (não pelo título) p/ NÃO cortar notícias PT que mencionem clubes de fora.
+ESTRANGEIRO_FONTE = re.compile(
+    r"palma|elpozo|movistar|intermovistar|jimbee|cartagena|valdepe|osasuna|\bxota\b|"
+    r"pe[ñn][íi]scola|santa coloma|ja[ée]n|ribera navarra|ciudad del vino|fcbfutsal|"
     r"magnus|pato|atl[âa]ntico|acbf|carlos barbosa|jaragu|marreco|krona|joinville|"
-    r"corinthians|cascavel|foz.?cataratas", re.I)
+    r"corinthians|cascavel|foz.?cataratas|napoli|kairat|kprf|dinamo|piast|differdange|"
+    r"shinagawa|semey|ekstraklasa|fsciudaddelvino|riberanavarrafs", re.I)
+# clubes tipicamente na UEFA Futsal Champions League (mantêm-se sempre)
+CHAMPIONS = re.compile(
+    r"bar[çc]a|fcbfutsal|palma|jimbee|elpozo|movistar|inter fs|napoli|kairat|"
+    r"anderlecht|sporting|benfica|liga dos campe|champions", re.I)
+# português no estrangeiro (o ângulo forte do Carlos)
+PT_ESTRANGEIRO = re.compile(
+    r"portugu[êe]s|portuguesa|\bluso\b|treinador portugu|internacional portugu|"
+    r"ricardinho|pany|bruno coelho|jo[ãa]o matos|afonso jesus|tiago brito|erick mendon", re.I)
+# Brasil: manter se LNF/seleção/saída p/ estrangeiro
 BR_MANTER = re.compile(
     r"\blnf\b|sele[çc][ãa]o|canarinh|verde.?amarel|"
-    # saídas para o estrangeiro (o ângulo do Carlos)
     r"deixa|de sa[íi]da|despede|adeus|rumo a|vai para|nova casa|se marcha|farewell|"
     r"de partida|assina pel|\beuropa\b|portugal|espanha|it[áa]lia|kuwait|jap[ãa]o|emirados",
     re.I)
+
+
+def estrangeiro_corta(it):
+    """True se é um clube estrangeiro sem relevância editorial (a cortar)."""
+    src = it.get("source", "")
+    if not ESTRANGEIRO_FONTE.search(src):
+        return False                      # não é clube estrangeiro
+    if CHAMPIONS.search(src):
+        return False                      # clube da Champions -> mantém
+    tit = it["title"]
+    if PT_ESTRANGEIRO.search(tit + " " + src) or BR_MANTER.search(tit):
+        return False                      # português no estrangeiro / LNF / seleção / saída
+    return True
 
 # Imprensa principal + sites de futsal PT (a seguir às competições)
 IMPRENSA = re.compile(
     r"\brecord\b|a bola|\babola\b|\bo jogo\b|\bojogo\b|maisfutebol|mais futebol|zerozero|"
     r"sapo desporto|rtp|futsalportugal|zona ?t[ée]cnica|zonatecnica|foco no futsal|"
-    r"foconofutsal|futsal ?planet|futsalplanet1997|record_portugal|zerozeropt", re.I)
+    r"foconofutsal|futsal ?planet|futsalplanet1997|record_portugal|zerozeropt|"
+    r"gustavomunana|munhana|gustavo munana", re.I)
 
 # Institucional internacional (ligas/federações/confederações)
 INSTITUCIONAL = re.compile(
@@ -376,8 +407,8 @@ def main():
                 continue
             if RUIDO.search(it["title"]):
                 continue
-            if BR_FONTE.search(it.get("source", "")) and not BR_MANTER.search(it["title"]):
-                continue  # Brasil só se LNF/seleção/saída p/ estrangeiro
+            if estrangeiro_corta(it):
+                continue  # clube estrangeiro sem relevância (não Champions/PT/LNF/seleção/saída)
             frases = [m.group(0).lower() for m in NOME_RE.finditer(it["title"])]
             if proprio and any(f in proprio for f in frases if len(f) >= 9):
                 continue
@@ -397,8 +428,8 @@ def main():
                 continue
             if req and not req.search(it["title"]):
                 continue
-            if BR_FONTE.search(it.get("source", "")) and not BR_MANTER.search(it["title"]):
-                continue  # Brasil só se LNF/seleção/saída p/ estrangeiro
+            if estrangeiro_corta(it):
+                continue  # clube estrangeiro sem relevância (não Champions/PT/LNF/seleção/saída)
             por_fonte.setdefault(name, []).append(it)  # p/ tabelas Por fonte
             frases = [m.group(0).lower() for m in NOME_RE.finditer(it["title"])]
             if proprio and any(f in proprio for f in frases if len(f) >= 9):
