@@ -83,6 +83,9 @@ FEEDS = [
     ("X · Futsal Polónia", "https://nitter.net/FutsalPolska/rss", "FUTSAL"),
     ("X · Futsal Legends", "https://nitter.net/Futsal_Legends/rss", "FUTSAL"),
     ("X · Eléctrico", "https://nitter.net/electricofc/rss", "FUTSAL"),
+    ("X · Leões P. Salvo", "https://nitter.net/leoesportosalvo/rss", "FUTSAL"),
+    ("X · Torreense", "https://nitter.net/SCUTorreense/rss", "FUTSAL"),
+    ("X · Portimonense", "https://nitter.net/PortimonenseSC/rss", "FUTSAL"),
     ("OFC Oceânia", "https://www.oceaniafootball.com/feed/", "FUTSAL"),
 ]
 
