@@ -141,7 +141,7 @@ BRASIL = re.compile(
     r"magnus|pato futsal|atl[âa]ntico|carlos barbosa|\bacbf\b|jaragu[áa]|marreco|krona|"
     r"joinville|corinthians|cascavel|foz.?cataratas|magnusfutsal|patofutsaloficial|"
     r"atlanticofutsal|acbffutsal|jaraguafutsal|marrecofutsaloficial|jec\.krona|fozcataratas_futsal|"
-    r"futsal brasil|\bbrasil\b",
+    r"futsal brasil|\bbrasil\b|\blnf\b|lnfoficial|liga nacional de futsal",
     re.I)
 
 # Filtro de clubes ESTRANGEIROS (não afogar o painel). Um post cuja FONTE é um clube
@@ -187,11 +187,10 @@ IMPRENSA = re.compile(
     r"\brecord\b|a bola|\babola\b|\bo jogo\b|\bojogo\b|maisfutebol|mais futebol|zerozero|"
     r"sapo desporto|rtp|futsalportugal|zona ?t[ée]cnica|zonatecnica|foco no futsal|"
     r"foconofutsal|futsal ?planet|futsalplanet1997|record_portugal|zerozeropt|"
-    r"gustavomunana|munhana|gustavo munana|\bimprensa\b", re.I)
+    r"gustavomunana|munhana|gustavo munana|\bcandelas\b|\bimprensa\b", re.I)
 
 # Institucional internacional (ligas/federações/confederações)
 INSTITUCIONAL = re.compile(
-    r"\blnf\b|lnfoficial|liga nacional de futsal|"
     r"\brfef\b|rfef_futsal|futsalrfef|"
     r"calcio a ?5|divisionecalcio|serie a[^.]{0,12}futsal|"
     r"uefa ?futsal|uefafutsal|futsal champions|uefafutsalchampionsleague|"
@@ -509,7 +508,7 @@ def main():
     por_niv = {}
     for it in itens:
         por_niv.setdefault(it["prio"], []).append(it)
-    LIM = {7: 22, 6: 10, 5: 8, 4: 12, 3: 3, 2: 4, 1: 8, 0: 2}
+    LIM = {7: 22, 6: 10, 5: 8, 4: 12, 3: 4, 2: 8, 1: 8, 0: 2}
     final = []
     for p in sorted(por_niv, reverse=True):
         final += por_niv[p][:LIM.get(p, 2)]
