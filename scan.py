@@ -77,6 +77,10 @@ FEEDS = [
     ("X · Futsal Fichajes", "https://nitter.net/FutsalFichajes3/rss", None),
     ("X · AMFutsal", "https://nitter.net/AMFutsal/rss", "FUTSAL"),
     ("X · Futsal Talk", "https://nitter.net/futsal_talk/rss", "FUTSAL"),
+    ("X · Futsal França FR", "https://nitter.net/FutsalFrance/rss", "FUTSAL"),
+    ("X · Actufutsal", "https://nitter.net/Actufutsal/rss", "FUTSAL"),
+    ("X · Futsal Polónia", "https://nitter.net/FutsalPolska/rss", "FUTSAL"),
+    ("X · Futsal Legends", "https://nitter.net/Futsal_Legends/rss", "FUTSAL"),
     ("OFC Oceânia", "https://www.oceaniafootball.com/feed/", "FUTSAL"),
 ]
 
