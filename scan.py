@@ -74,6 +74,9 @@ FEEDS = [
     ("X · Copa América", "https://nitter.net/CopaAmerica/rss", "FUTSAL"),
     ("X · Futsal Planet", "https://nitter.net/futsalplanet97/rss", None),
     ("X · zerozero Futsal", "https://nitter.net/futsalzerozero/rss", None),
+    ("X · Futsal Fichajes", "https://nitter.net/FutsalFichajes3/rss", None),
+    ("X · AMFutsal", "https://nitter.net/AMFutsal/rss", "FUTSAL"),
+    ("X · Futsal Talk", "https://nitter.net/futsal_talk/rss", "FUTSAL"),
     ("OFC Oceânia", "https://www.oceaniafootball.com/feed/", "FUTSAL"),
 ]
 
@@ -195,7 +198,7 @@ IMPRENSA = re.compile(
     r"\brecord\b|a bola|\babola\b|\bo jogo\b|\bojogo\b|maisfutebol|mais futebol|zerozero|"
     r"sapo desporto|rtp|futsalportugal|zona ?t[ée]cnica|zonatecnica|foco no futsal|"
     r"foconofutsal|futsal ?planet|futsalplanet1997|record_portugal|zerozeropt|"
-    r"gustavomunana|munhana|gustavo munana|\bcandelas\b|\bimprensa\b", re.I)
+    r"gustavomunana|munhana|gustavo munana|\bcandelas\b|fichajes|\bimprensa\b", re.I)
 
 # Institucional internacional (ligas/federações/confederações)
 INSTITUCIONAL = re.compile(
