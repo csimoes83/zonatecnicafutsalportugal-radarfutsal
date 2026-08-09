@@ -51,6 +51,7 @@ FEEDS = [
     ("Futsal França", "https://news.google.com/rss/search?q=futsal%20%28France%20OR%20%22D1%20Futsal%22%20OR%20championnat%20OR%20Nantes%20OR%20%22coupe%20de%20France%20futsal%22%20OR%20ACCS%29&hl=fr&gl=FR&ceid=FR:fr", None),
     ("Futsal Croácia", "https://news.google.com/rss/search?q=%28futsal%20OR%20%22mali%20nogomet%22%29%20%28Hrvatska%20OR%20%22Futsal%20Dinamo%22%20OR%20%22Novo%20Vrijeme%22%20OR%20reprezentacija%20OR%20Osijek%29&hl=hr&gl=HR&ceid=HR:hr", None),
     ("Futsal Ásia", "https://news.google.com/rss/search?q=futsal%20%28Japan%20OR%20Iran%20OR%20%22AFC%20Futsal%22%20OR%20%22F.League%22%20OR%20%22Asian%20Cup%22%20OR%20Thailand%20OR%20Vietnam%29&hl=en&gl=US&ceid=US:en", None),
+    ("Futsal Argentina", "https://news.google.com/rss/search?q=futsal%20%28Argentina%20OR%20%22selecci%C3%B3n%20argentina%20futsal%22%20OR%20AFA%20OR%20%22futsal%20argentino%22%29&hl=es-419&gl=AR&ceid=AR:es", None),
     ("CONMEBOL", "https://www.conmebol.com/feed/", "FUTSAL"),
     ("Google Alerts", "https://www.google.com/alerts/feeds/07340303412689524551/4521077332057732674", "TEMA"),
     ("Alerts Futsal", "https://www.google.com/alerts/feeds/07340303412689524551/6715931025412471738", "TEMA"),
@@ -210,7 +211,7 @@ INSTITUCIONAL = re.compile(
     r"calcio a ?5|divisionecalcio|serie a[^.]{0,12}futsal|"
     r"uefa ?futsal|uefafutsal|futsal champions|uefafutsalchampionsleague|"
     r"fifa futsal|futsal world cup|mundial de futsal|"
-    r"futsal fran[çc]a|futsal cro[áa]cia|futsal [áa]sia|f\.league|f\.?league jap|copa am[ée]rica", re.I)
+    r"futsal fran[çc]a|futsal cro[áa]cia|futsal [áa]sia|futsal argentina|f\.league|f\.?league jap|copa am[ée]rica", re.I)
 
 
 def fetch(url):
