@@ -69,6 +69,11 @@ FEEDS = [
     ("X · Munhana", "https://nitter.net/gustavomunana/rss", None),
     ("X · Candelas", "https://nitter.net/CandelasJr/rss", None),
     ("X · RFEF Futsal", "https://nitter.net/FutSalRFEF/rss", None),
+    ("X · Efesé Cartagena", "https://nitter.net/EfeseForo/rss", None),
+    ("X · F.League Japão", "https://nitter.net/futsal1958/rss", None),
+    ("X · Copa América", "https://nitter.net/CopaAmerica/rss", "FUTSAL"),
+    ("X · Futsal Planet", "https://nitter.net/futsalplanet97/rss", None),
+    ("X · zerozero Futsal", "https://nitter.net/futsalzerozero/rss", None),
     ("OFC Oceânia", "https://www.oceaniafootball.com/feed/", "FUTSAL"),
 ]
 
@@ -198,7 +203,7 @@ INSTITUCIONAL = re.compile(
     r"calcio a ?5|divisionecalcio|serie a[^.]{0,12}futsal|"
     r"uefa ?futsal|uefafutsal|futsal champions|uefafutsalchampionsleague|"
     r"fifa futsal|futsal world cup|mundial de futsal|"
-    r"futsal fran[çc]a|futsal cro[áa]cia|futsal [áa]sia", re.I)
+    r"futsal fran[çc]a|futsal cro[áa]cia|futsal [áa]sia|f\.league|f\.?league jap|copa am[ée]rica", re.I)
 
 
 def fetch(url):
