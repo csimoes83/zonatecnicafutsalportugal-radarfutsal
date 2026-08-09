@@ -66,6 +66,9 @@ FEEDS = [
     ("X · Alzira FS", "https://nitter.net/AlziraFS/rss", None),
     ("X · Fahey", "https://nitter.net/jamiefahey1/rss", "FUTSAL"),
     ("X · KSA Futsal", "https://nitter.net/futsal_KSA2030/rss", None),
+    ("X · Munhana", "https://nitter.net/gustavomunana/rss", None),
+    ("X · Candelas", "https://nitter.net/CandelasJr/rss", None),
+    ("X · RFEF Futsal", "https://nitter.net/FutSalRFEF/rss", None),
     ("OFC Oceânia", "https://www.oceaniafootball.com/feed/", "FUTSAL"),
 ]
 

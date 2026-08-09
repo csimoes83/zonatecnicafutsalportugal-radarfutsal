@@ -139,5 +139,3 @@ fifa
 # + sites futsal (Futsal Planet, zerozero futsal)
 futsalplanet
 zerozerofutsal
-# + fonte futsal
-candelas
