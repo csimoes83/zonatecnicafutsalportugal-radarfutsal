@@ -47,23 +47,29 @@ def render(itens, por_fonte, data, ok, nfeeds):
     </div>''')
     timeline = "\n".join(tl) if tl else '<div class="card"><h3>Sem novidades nas últimas 48h</h3></div>'
 
-    # tabelas Por fonte
+    # secção por nível (espelha os filtros; usa os itens já classificados)
+    NIVEIS = [
+        ("placard", "pt,placard", "Liga Placard", "🟢 M", "#007d3c"),
+        ("feminina", "pt,feminina", "Liga Feminina", "🚺", "#c026d3"),
+        ("segunda", "pt,segunda", "2ª Divisão", "🔵 Nacional", "#1e5fd6"),
+        ("jornais", "pt,jornais", "Imprensa", "📰 Jornais", "#c1112b"),
+        ("institucional", "mundo,institucional", "Internacional", "🏛️ UEFA/Ligas", "#8e44ad"),
+        ("es", "mundo,es", "Espanha", "🇪🇸 Fútbol sala", "#ffb300"),
+        ("br", "mundo,br", "Brasil", "🇧🇷 LNF", "#127a4b"),
+    ]
     src_cards = []
-    for nome, cor, tag, fontes, filtros in CARDS:
-        itens_c = []
-        for f in fontes:
-            itens_c += por_fonte.get(f, [])
-        itens_c = sorted(itens_c, key=lambda x: x["when"], reverse=True)[:5]
+    for token, df, nome, tag, cor in NIVEIS:
+        itens_c = [it for it in itens if token in it.get("ftag", "").split(",")]
+        itens_c = sorted(itens_c, key=lambda x: x["when"], reverse=True)[:6]
         if not itens_c:
             continue
         lis = "\n".join(
             f'      <li><a href="{esc(i["link"])}" target="_blank" rel="noopener">'
             f'{esc(i["title"][:95])}</a> <span class="t">· {i["when"].astimezone(LX):%d/%m}</span></li>'
             for i in itens_c)
-        dot = f'background:{cor}' + ('' if cor != '#000000' else ';border:1px solid var(--line)')
         src_cards.append(
-            f'''  <div class="src" data-f="{','.join(filtros)}">
-    <div class="src-head"><span class="dot" style="{dot}"></span>
+            f'''  <div class="src" data-f="{df}">
+    <div class="src-head"><span class="dot" style="background:{cor}"></span>
       <span class="name">{esc(nome)}</span><span class="tag">{tag}</span></div>
     <ul>
 {lis}
@@ -146,7 +152,7 @@ def render(itens, por_fonte, data, ok, nfeeds):
 <div class="grid" id="timeline">
 {timeline}
 </div>
-<div class="sec">Por fonte</div>
+<div class="sec">Por competição / região</div>
 <div class="sources" id="fontes">
 {fontes_html}
 </div>
