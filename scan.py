@@ -89,6 +89,16 @@ FEEDS = [
     ("X · Torreense", "https://nitter.net/SCUTorreense/rss", "X_FUTSAL"),
     ("X · Portimonense", "https://nitter.net/PortimonenseSC/rss", "X_FUTSAL"),
     ("X · Peñíscola", "https://nitter.net/peniscola/rss", "X"),
+    ("X · Movistar Inter", "https://nitter.net/InterMovistar/rss", "X"),
+    ("X · Osasuna Magna", "https://nitter.net/xota_es/rss", "X"),
+    ("X · Valdepeñas", "https://nitter.net/fsvaldepenas/rss", "X"),
+    ("X · Santa Coloma", "https://nitter.net/IndustriasFS/rss", "X"),
+    ("X · Jaén", "https://nitter.net/jaenpfutsal/rss", "X"),
+    ("X · Ribera Navarra", "https://nitter.net/RiberaNavarraFS/rss", "X"),
+    ("X · Betis Futsal", "https://nitter.net/RealBetisFutsal/rss", "X"),
+    ("X · Manzanares", "https://nitter.net/ManzanaresFSM/rss", "X"),
+    ("X · Córdoba", "https://nitter.net/CordobaFutsal/rss", "X"),
+    ("X · Noia", "https://nitter.net/cnoia_fs/rss", "X"),
     ("OFC Oceânia", "https://www.oceaniafootball.com/feed/", "FUTSAL"),
 ]
 
@@ -157,6 +167,7 @@ ESPANHA = re.compile(
     r"bar[çc]a|barcelona|"
     r"\bpalma\b|elpozo|el pozo|movistar|inter fs|jimbee|cartagena|valdepe|osasuna|\bxota\b|"
     r"pe[ñn][íi]scola|santa coloma|ja[ée]n|ribera navarra|ciudad del vino|\brfef\b|lnfs|"
+    r"betis|manzanares|c[óo]rdoba futsal|\bnoia\b|antequera|d[ií]vision de honor|"
     r"f[úu]tbol sala|palmafutsaloficial|intermovistar|jimbeecartagena|jaenfutbolsala|c\.d\.xota|"
     r"riberanavarrafs|fsciudaddelvino|futsalrfef|fcbfutsal", re.I)
 
