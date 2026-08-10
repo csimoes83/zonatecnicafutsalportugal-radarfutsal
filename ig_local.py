@@ -80,7 +80,9 @@ def main():
     except Exception:
         pos = 0
     pos %= len(handles)
-    lote = [handles[(pos + i) % len(handles)] for i in range(min(LOTE, len(handles)))]
+    # varre TODAS as contas (o Carlos quer todas, não interessa a posição na rotação);
+    # começa na posição guardada só para variar por onde arranca cada sweep
+    lote = handles[pos:] + handles[:pos]
 
     agora = datetime.now(timezone.utc)
     corte = agora - timedelta(hours=JANELA_H)
@@ -95,13 +97,19 @@ def main():
     except Exception:
         pass
 
-    ok = fail = novos = 0
+    ok = fail = novos = falhas_seguidas = 0
     for user in lote:
         edges = fetch_conta(user)
         if edges is None:
             fail += 1
+            falhas_seguidas += 1
+            # provável throttle do Instagram -> arrefecer e continuar (apanhar TODAS)
+            if falhas_seguidas >= 4:
+                time.sleep(90)
+                falhas_seguidas = 0
         else:
             ok += 1
+            falhas_seguidas = 0
             for p in posts_recentes(user, edges, corte):
                 key = p.get("code") or p["link"]
                 if key not in cache:
