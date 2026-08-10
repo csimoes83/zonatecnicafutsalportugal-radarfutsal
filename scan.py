@@ -55,37 +55,37 @@ FEEDS = [
     ("CONMEBOL", "https://www.conmebol.com/feed/", "FUTSAL"),
     ("Google Alerts", "https://www.google.com/alerts/feeds/07340303412689524551/4521077332057732674", "TEMA"),
     ("Alerts Futsal", "https://www.google.com/alerts/feeds/07340303412689524551/6715931025412471738", "TEMA"),
-    ("X · Palma", "https://nitter.net/PalmaFutsal/rss", None),
-    ("X · Magnus", "https://nitter.net/MagnusFutsal/rss", None),
-    ("X · Jimbee", "https://nitter.net/JimbeeCartagena/rss", None),
-    ("X · Barça FS", "https://nitter.net/FCBfutbolsala/rss", None),
-    ("X · LNFS", "https://nitter.net/LNFS/rss", None),
-    ("X · UEFA Futsal", "https://nitter.net/UEFAFutsal/rss", None),
-    ("X · RFEF", "https://nitter.net/RFEF/rss", "FUTSAL"),
-    ("X · ElPozo", "https://nitter.net/ElPozoMurcia_FS/rss", None),
-    ("X · Pato", "https://nitter.net/patofutsal/rss", None),
-    ("X · Alzira FS", "https://nitter.net/AlziraFS/rss", None),
-    ("X · Fahey", "https://nitter.net/jamiefahey1/rss", "FUTSAL"),
-    ("X · KSA Futsal", "https://nitter.net/futsal_KSA2030/rss", None),
-    ("X · Munhana", "https://nitter.net/gustavomunana/rss", None),
-    ("X · Candelas", "https://nitter.net/CandelasJr/rss", None),
-    ("X · RFEF Futsal", "https://nitter.net/FutSalRFEF/rss", None),
-    ("X · Efesé Cartagena", "https://nitter.net/EfeseForo/rss", None),
-    ("X · F.League Japão", "https://nitter.net/futsal1958/rss", None),
-    ("X · Copa América", "https://nitter.net/CopaAmerica/rss", "FUTSAL"),
-    ("X · Futsal Planet", "https://nitter.net/futsalplanet97/rss", None),
-    ("X · zerozero Futsal", "https://nitter.net/futsalzerozero/rss", None),
-    ("X · Futsal Fichajes", "https://nitter.net/FutsalFichajes3/rss", None),
-    ("X · AMFutsal", "https://nitter.net/AMFutsal/rss", "FUTSAL"),
-    ("X · Futsal Talk", "https://nitter.net/futsal_talk/rss", "FUTSAL"),
-    ("X · Futsal França FR", "https://nitter.net/FutsalFrance/rss", "FUTSAL"),
-    ("X · Actufutsal", "https://nitter.net/Actufutsal/rss", "FUTSAL"),
-    ("X · Futsal Polónia", "https://nitter.net/FutsalPolska/rss", "FUTSAL"),
-    ("X · Futsal Legends", "https://nitter.net/Futsal_Legends/rss", "FUTSAL"),
-    ("X · Eléctrico", "https://nitter.net/electricofc/rss", "FUTSAL"),
-    ("X · Leões Porto Salvo", "https://nitter.net/leoesportosalvo/rss", "FUTSAL"),
-    ("X · Torreense", "https://nitter.net/SCUTorreense/rss", "FUTSAL"),
-    ("X · Portimonense", "https://nitter.net/PortimonenseSC/rss", "FUTSAL"),
+    ("X · Palma", "https://nitter.net/PalmaFutsal/rss", "X"),
+    ("X · Magnus", "https://nitter.net/MagnusFutsal/rss", "X"),
+    ("X · Jimbee", "https://nitter.net/JimbeeCartagena/rss", "X"),
+    ("X · Barça FS", "https://nitter.net/FCBfutbolsala/rss", "X"),
+    ("X · LNFS", "https://nitter.net/LNFS/rss", "X"),
+    ("X · UEFA Futsal", "https://nitter.net/UEFAFutsal/rss", "X"),
+    ("X · RFEF", "https://nitter.net/RFEF/rss", "X_FUTSAL"),
+    ("X · ElPozo", "https://nitter.net/ElPozoMurcia_FS/rss", "X"),
+    ("X · Pato", "https://nitter.net/patofutsal/rss", "X"),
+    ("X · Alzira FS", "https://nitter.net/AlziraFS/rss", "X"),
+    ("X · Fahey", "https://nitter.net/jamiefahey1/rss", "X_FUTSAL"),
+    ("X · KSA Futsal", "https://nitter.net/futsal_KSA2030/rss", "X"),
+    ("X · Munhana", "https://nitter.net/gustavomunana/rss", "X"),
+    ("X · Candelas", "https://nitter.net/CandelasJr/rss", "X"),
+    ("X · RFEF Futsal", "https://nitter.net/FutSalRFEF/rss", "X"),
+    ("X · Efesé Cartagena", "https://nitter.net/EfeseForo/rss", "X"),
+    ("X · F.League Japão", "https://nitter.net/futsal1958/rss", "X"),
+    ("X · Copa América", "https://nitter.net/CopaAmerica/rss", "X_FUTSAL"),
+    ("X · Futsal Planet", "https://nitter.net/futsalplanet97/rss", "X"),
+    ("X · zerozero Futsal", "https://nitter.net/futsalzerozero/rss", "X"),
+    ("X · Futsal Fichajes", "https://nitter.net/FutsalFichajes3/rss", "X"),
+    ("X · AMFutsal", "https://nitter.net/AMFutsal/rss", "X_FUTSAL"),
+    ("X · Futsal Talk", "https://nitter.net/futsal_talk/rss", "X_FUTSAL"),
+    ("X · Futsal França FR", "https://nitter.net/FutsalFrance/rss", "X_FUTSAL"),
+    ("X · Actufutsal", "https://nitter.net/Actufutsal/rss", "X_FUTSAL"),
+    ("X · Futsal Polónia", "https://nitter.net/FutsalPolska/rss", "X_FUTSAL"),
+    ("X · Futsal Legends", "https://nitter.net/Futsal_Legends/rss", "X_FUTSAL"),
+    ("X · Eléctrico", "https://nitter.net/electricofc/rss", "X_FUTSAL"),
+    ("X · Leões Porto Salvo", "https://nitter.net/leoesportosalvo/rss", "X_FUTSAL"),
+    ("X · Torreense", "https://nitter.net/SCUTorreense/rss", "X_FUTSAL"),
+    ("X · Portimonense", "https://nitter.net/PortimonenseSC/rss", "X_FUTSAL"),
     ("OFC Oceânia", "https://www.oceaniafootball.com/feed/", "FUTSAL"),
 ]
 
@@ -345,6 +345,22 @@ def _ig_save_cache(items):
     except Exception:
         pass
 
+
+def x_cache_itens():
+    """Tweets da cache local (x_cache.json, puxada no Mac via nitter)."""
+    try:
+        raw = json.load(open(os.path.join(ROOT, "x_cache.json"), encoding="utf-8"))
+    except Exception:
+        return []
+    out = []
+    for it in raw:
+        try:
+            out.append({"title": it["title"], "link": it["link"],
+                        "source": it["source"], "when": datetime.fromisoformat(it["when"])})
+        except Exception:
+            pass
+    return out
+
 def instagram_apify():
     """Puxa os últimos posts das contas via Apify nas janelas do dia; fora disso
     devolve a cache (para o IG persistir no painel entre varreduras pagas)."""
@@ -455,8 +471,23 @@ def main():
                 continue
             it["key"] = key_of(it)
             itens.append(it)
+    # X/Twitter vem da cache local (x_cache.json, puxada no Mac via nitter) — mesma
+    # lógica dos feeds. A cloud NÃO tenta o nitter (IP de datacenter é bloqueado).
+    for it in x_cache_itens():
+        if not it["when"] or it["when"] < corte:
+            continue
+        if RUIDO.search(it["title"]):
+            continue
+        frases = [m.group(0).lower() for m in NOME_RE.finditer(it["title"])]
+        if proprio and any(f in proprio for f in frases if len(f) >= 9):
+            continue
+        it["key"] = key_of(it)
+        itens.append(it)
+
     por_fonte = {}
     for name, url, filt in FEEDS:
+        if filt and filt.startswith("X"):
+            continue  # X vem da cache local, não do nitter na cloud
         raw = fetch(url)
         if not raw:
             continue
