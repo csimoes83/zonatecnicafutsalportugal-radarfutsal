@@ -153,6 +153,7 @@ SEGUNDA = re.compile(
 
 # Espanha (4º nível)
 ESPANHA = re.compile(
+    r"bar[çc]a|barcelona|"
     r"\bpalma\b|elpozo|el pozo|movistar|inter fs|jimbee|cartagena|valdepe|osasuna|\bxota\b|"
     r"pe[ñn][íi]scola|santa coloma|ja[ée]n|ribera navarra|ciudad del vino|\brfef\b|lnfs|"
     r"f[úu]tbol sala|palmafutsaloficial|intermovistar|jimbeecartagena|jaenfutbolsala|c\.d\.xota|"
