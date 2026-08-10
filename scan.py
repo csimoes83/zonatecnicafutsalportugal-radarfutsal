@@ -97,7 +97,7 @@ FEEDS = [
     ("X · Ribera Navarra", "https://nitter.net/RiberaNavarraFS/rss", "X"),
     ("X · Betis Futsal", "https://nitter.net/RealBetisFutsal/rss", "X"),
     ("X · Manzanares", "https://nitter.net/ManzanaresFSM/rss", "X"),
-    ("X · Córdoba", "https://nitter.net/CordobaFutsal/rss", "X"),
+    ("X · Córdoba Futsal", "https://nitter.net/CordobaFutsal/rss", "X"),
     ("X · Noia", "https://nitter.net/cnoia_fs/rss", "X"),
     ("OFC Oceânia", "https://www.oceaniafootball.com/feed/", "FUTSAL"),
 ]
