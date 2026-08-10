@@ -56,6 +56,7 @@ def render(itens, por_fonte, data, ok, nfeeds):
         ("institucional", "mundo,institucional", "Internacional", "🏛️ UEFA/Ligas", "#8e44ad"),
         ("es", "mundo,es", "Espanha", "🇪🇸 Fútbol sala", "#ffb300"),
         ("br", "mundo,br", "Brasil", "🇧🇷 LNF", "#127a4b"),
+        ("social", "social", "X / Redes", "🐦 Tweets", "#1da1f2"),
     ]
     src_cards = []
     for token, df, nome, tag, cor in NIVEIS:

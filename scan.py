@@ -10,6 +10,8 @@ from datetime import datetime, timedelta, timezone
 ROOT = os.path.dirname(os.path.abspath(__file__))
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
 JANELA_H = 72
+JANELA_LENTA = 240   # 10 dias, p/ frentes com pouca notícia fresca (feminino, seleção, PT no estrangeiro)
+FEEDS_LENTOS = {"Futsal Feminino", "Seleção Portugal", "Português no Estrangeiro"}
 MAX_ITENS = 55
 
 FUTSAL_RE = re.compile(r"futsal|f[úu]tbol sala|calcio a 5|liga placard|futsalista", re.I)
@@ -41,7 +43,7 @@ FEEDS = [
     ("Record", "https://www.record.pt/rss", "FUTSAL"),
     ("Imprensa", "https://news.google.com/rss/search?q=futsal%20%28site%3Arecord.pt%20OR%20site%3Aojogo.pt%20OR%20site%3Amaisfutebol.iol.pt%20OR%20site%3Aabola.pt%20OR%20site%3Atvi24.iol.pt%20OR%20site%3Asapo.pt%20OR%20site%3Artp.pt%20OR%20site%3Adn.pt%20OR%20site%3Ajn.pt%29&hl=pt-PT&gl=PT&ceid=PT:pt", None),
     # Google News p/ encher níveis (o melhor do futsal, mesmo com IG calado):
-    ("Futsal Feminino", "https://news.google.com/rss/search?q=futsal%20feminino%20%28Portugal%20OR%20Benfica%20OR%20Sporting%20OR%20%22liga%20feminina%22%29&hl=pt-PT&gl=PT&ceid=PT:pt", None),
+    ("Futsal Feminino", "https://news.google.com/rss/search?q=futsal%20%28feminino%20OR%20feminina%20OR%20%22liga%20feminina%22%20OR%20%22sele%C3%A7%C3%A3o%20feminina%22%29%20%28Portugal%20OR%20Benfica%20OR%20Sporting%20OR%20Nun%20OR%20Maia%20OR%20%22Atl%C3%A9tico%22%20OR%20Braga%20OR%20treinadora%20OR%20Espanha%29&hl=pt-PT&gl=PT&ceid=PT:pt", None),
     ("Fútbol Sala", "https://news.google.com/rss/search?q=%22f%C3%BAtbol%20sala%22%20OR%20futsal%20%28Espa%C3%B1a%20OR%20Primera%20OR%20LNFS%20OR%20Palma%20OR%20ElPozo%20OR%20Movistar%20OR%20%22Bar%C3%A7a%22%20OR%20Jimbee%20OR%20Osasuna%20OR%20Valdepe%C3%B1as%20OR%20%22Ja%C3%A9n%22%20OR%20Cartagena%20OR%20Pe%C3%B1%C3%ADscola%29&hl=es&gl=ES&ceid=ES:es", None),
     ("Futsal Brasil", "https://news.google.com/rss/search?q=futsal%20%28Brasil%20OR%20LNF%20OR%20%22Liga%20Nacional%22%20OR%20Magnus%20OR%20Pato%20OR%20Corinthians%20OR%20%22Atl%C3%A2ntico%22%20OR%20%22Carlos%20Barbosa%22%20OR%20%22Jaragu%C3%A1%22%20OR%20Joinville%20OR%20Cascavel%20OR%20%22sele%C3%A7%C3%A3o%20brasileira%22%29&hl=pt-BR&gl=BR&ceid=BR:pt", None),
     ("Futsal Portugal", "https://news.google.com/rss/search?q=futsal%20Portugal&hl=pt-PT&gl=PT&ceid=PT:pt", None),
@@ -453,6 +455,7 @@ def instagram_apify():
 def main():
     agora = datetime.now(timezone.utc)
     corte = agora - timedelta(hours=JANELA_H)
+    corte_lento = agora - timedelta(hours=JANELA_LENTA)
     proprio = texto_proprio()
 
     itens, ok = [], 0
@@ -493,8 +496,9 @@ def main():
             continue
         ok += 1
         req = {"FUTSAL": FUTSAL_RE, "TEMA": TEMA_RE}.get(filt)
+        corte_f = corte_lento if name in FEEDS_LENTOS else corte
         for it in parse_feed(name, raw):
-            if not it["when"] or it["when"] < corte:
+            if not it["when"] or it["when"] < corte_f:
                 continue
             if RUIDO.search(it["title"]):
                 continue
@@ -524,14 +528,16 @@ def main():
         if SEGUNDA.search(hay):       return 5, "pt,segunda"
         if IMPRENSA.search(hay):      return 4, "pt,jornais"
         if INSTITUCIONAL.search(hay): return 3, "mundo,institucional"
-        if CHAMPIONS.search(hay):     return 3, "mundo,institucional"  # Napoli/Kairat/…
-        if PT_CLUBES_FORA.search(hay):return 3, "mundo,institucional"  # clubes c/ portugueses
-        if ESPANHA.search(hay):       return 2, "mundo,es"
+        if ESPANHA.search(hay):       return 2, "mundo,es"   # Palma/Barça/Jimbee/ElPozo… -> Espanha
         if BRASIL.search(hay):        return 2, "mundo,br"
+        if CHAMPIONS.search(hay):     return 3, "mundo,institucional"  # só Champions não-ES/BR (Napoli/Kairat)
+        if PT_CLUBES_FORA.search(hay):return 3, "mundo,institucional"  # clubes c/ portugueses
         if PRIO_PT.search(hay):       return 1, "pt"
         return 0, "mundo"
     for it in itens:
         it["prio"], it["ftag"] = classifica(it)
+        if it["source"].startswith("X"):   # tweets também no filtro Redes
+            it["ftag"] += ",social"
         # marca extra "jornais" a QUALQUER item de fonte-jornal (mesmo que o nível
         # seja Placard/2ª/etc), p/ o filtro Jornais mostrar toda a imprensa
         if IMPRENSA.search(it.get("source", "")) and "jornais" not in it["ftag"]:
