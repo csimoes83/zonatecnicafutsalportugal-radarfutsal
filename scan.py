@@ -528,11 +528,11 @@ def main():
         if PLACARD.search(hay):       return 7, "pt,placard"
         if SEGUNDA.search(hay):       return 5, "pt,segunda"
         if IMPRENSA.search(hay):      return 4, "pt,jornais"
-        if INSTITUCIONAL.search(hay): return 3, "mundo,institucional"
-        if ESPANHA.search(hay):       return 2, "mundo,es"   # Palma/Barça/Jimbee/ElPozo… -> Espanha
-        if BRASIL.search(hay):        return 2, "mundo,br"
-        if CHAMPIONS.search(hay):     return 3, "mundo,institucional"  # só Champions não-ES/BR (Napoli/Kairat)
-        if PT_CLUBES_FORA.search(hay):return 3, "mundo,institucional"  # clubes c/ portugueses
+        if ESPANHA.search(hay):       return 2, "es"   # tudo o espanhol -> Espanha (não Mundo)
+        if BRASIL.search(hay):        return 2, "br"   # tudo o brasileiro -> Brasil (não Mundo)
+        if INSTITUCIONAL.search(hay): return 3, "mundo"  # Mundo = Internacional (UEFA/CAF/CONMEBOL/Ásia/Champions/clubes)
+        if CHAMPIONS.search(hay):     return 3, "mundo"
+        if PT_CLUBES_FORA.search(hay):return 3, "mundo"
         if PRIO_PT.search(hay):       return 1, "pt"
         return 0, "mundo"
     for it in itens:

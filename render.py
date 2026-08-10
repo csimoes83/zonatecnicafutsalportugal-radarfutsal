@@ -32,14 +32,16 @@ CARDS = [
 def render(itens, por_fonte, data, ok, nfeeds):
     # timeline (Novo, PT primeiro)
     LB = {7: ' · 🟢 LIGA PLACARD', 6: ' · 🚺 LIGA FEMININA', 5: ' · 🔵 2ª DIVISÃO',
-          4: ' · 📰 IMPRENSA', 3: ' · 🏛️ INTERNACIONAL', 2: ' · 🌍 BR/ES',
-          1: ' · 🇵🇹 PT', 0: ''}
+          4: ' · 📰 IMPRENSA', 3: ' · 🌍 INTERNACIONAL', 1: ' · 🇵🇹 PT', 0: ''}
     tl = []
     for it in itens:
         w = it["when"].astimezone(LX)
         p = it.get("prio", 0)
-        tag = LB.get(p, '')
         df = it.get("ftag", "mundo")
+        if p == 2:
+            tag = ' · 🇪🇸 ESPANHA' if 'es' in df.split(',') else ' · 🇧🇷 BRASIL'
+        else:
+            tag = LB.get(p, '')
         tl.append(f'''    <div class="card" data-f="{df}">
       <div class="k">{w:%H:%M} · {esc(it["source"])}{tag}</div>
       <h3><a href="{esc(it["link"])}" target="_blank" rel="noopener">{esc(it["title"])}</a></h3>
@@ -53,9 +55,9 @@ def render(itens, por_fonte, data, ok, nfeeds):
         ("feminina", "pt,feminina", "Liga Feminina", "🚺", "#c026d3"),
         ("segunda", "pt,segunda", "2ª Divisão", "🔵 Nacional", "#1e5fd6"),
         ("jornais", "pt,jornais", "Imprensa", "📰 Jornais", "#c1112b"),
-        ("institucional", "mundo,institucional", "Internacional", "🏛️ UEFA/Ligas", "#8e44ad"),
-        ("es", "mundo,es", "Espanha", "🇪🇸 Fútbol sala", "#ffb300"),
-        ("br", "mundo,br", "Brasil", "🇧🇷 LNF", "#127a4b"),
+        ("es", "es", "Espanha", "🇪🇸 Fútbol sala", "#ffb300"),
+        ("br", "br", "Brasil", "🇧🇷 LNF", "#127a4b"),
+        ("mundo", "mundo", "Internacional", "🌍 UEFA/Mundo", "#8e44ad"),
         ("social", "social", "X / Redes", "🐦 Tweets", "#1da1f2"),
     ]
     src_cards = []
@@ -144,8 +146,7 @@ def render(itens, por_fonte, data, ok, nfeeds):
  <button class="chip" data-f="pt">🇵🇹 PT</button>
  <button class="chip" data-f="es">🇪🇸 ES</button>
  <button class="chip" data-f="br">🇧🇷 BR</button>
- <button class="chip" data-f="institucional">🏛️ Intl</button>
- <button class="chip" data-f="mundo">🌍 Mundo</button>
+ <button class="chip" data-f="mundo">🌍 Internacional</button>
  <button class="chip" data-f="jornais">📰 Jornais</button>
  <button class="chip" data-f="social">𝕏 Redes</button>
 </div>
