@@ -80,9 +80,17 @@ def main():
     except Exception:
         pos = 0
     pos %= len(handles)
-    # varre TODAS as contas (o Carlos quer todas, não interessa a posição na rotação);
-    # começa na posição guardada só para variar por onde arranca cada sweep
-    lote = handles[pos:] + handles[:pos]
+    # CONTAS-CHAVE primeiro e SEMPRE (clubes da Placard + fontes) — apanhadas antes de
+    # qualquer throttle; o resto roda a seguir. Assim uma contratação do Benfica/Sporting
+    # é captada logo no início de cada sweep.
+    PRIORIDADE = ["modalidadesslb", "sportingmodalidades", "scbragamodalidades", "adfundao",
+                  "portimonense_futsal", "oficial_upvn", "leoesportosalvo", "electricofc_oficial",
+                  "scutorreensemodalidades", "fcfamalicaomodalidades", "maisrioave", "scfz_futsal",
+                  "fcportosports", "ligaplacard", "foconofutsal", "gustavomunana", "futsalfemininonews",
+                  "gcrnunalvaresfutsal", "maiafutsal", "atleticocp"]
+    prio = [h for h in PRIORIDADE if h in handles]
+    resto = [h for h in (handles[pos:] + handles[:pos]) if h not in prio]
+    lote = prio + resto
 
     agora = datetime.now(timezone.utc)
     corte = agora - timedelta(hours=JANELA_H)
