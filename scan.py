@@ -579,7 +579,7 @@ def main():
     por_niv = {}
     for it in itens:
         por_niv.setdefault(it["prio"], []).append(it)
-    LIM = {7: 22, 6: 10, 5: 8, 4: 12, 3: 4, 2: 8, 1: 8, 0: 2}
+    LIM = {7: 99, 6: 99, 5: 99, 4: 20, 3: 6, 2: 12, 1: 12, 0: 4}  # competições PT sem teto (pré-época)
     final = []
     for p in sorted(por_niv, reverse=True):
         final += por_niv[p][:LIM.get(p, 2)]
