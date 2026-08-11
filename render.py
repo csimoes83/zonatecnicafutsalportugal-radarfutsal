@@ -47,7 +47,7 @@ def render(itens, por_fonte, data, ok, nfeeds):
       <h3><a href="{esc(it["link"])}" target="_blank" rel="noopener">{esc(it["title"])}</a></h3>
       <p>{esc(it["source"])} · {w:%d/%m %H:%M}</p>
     </div>''')
-    timeline = "\n".join(tl) if tl else '<div class="card"><h3>Sem novidades nas últimas 48h</h3></div>'
+    timeline = "\n".join(tl) if tl else '<div class="card"><h3>Sem novidades nas últimos 7 dias</h3></div>'
 
     # secção por nível (espelha os filtros; usa os itens já classificados)
     NIVEIS = [
@@ -150,7 +150,7 @@ def render(itens, por_fonte, data, ok, nfeeds):
  <button class="chip" data-f="jornais">📰 Jornais</button>
  <button class="chip" data-f="social">𝕏 Redes</button>
 </div>
-<div class="sec">🆕 Novo · últimas 48h (o teu 🇵🇹 primeiro)</div>
+<div class="sec">🆕 Novo · últimos 7 dias (o teu 🇵🇹 primeiro)</div>
 <div class="grid" id="timeline">
 {timeline}
 </div>
