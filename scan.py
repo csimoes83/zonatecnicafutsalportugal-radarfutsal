@@ -484,7 +484,7 @@ def main():
             if estrangeiro_corta(it):
                 continue  # clube estrangeiro sem relevância (não Champions/PT/LNF/seleção/saída)
             frases = [m.group(0).lower() for m in NOME_RE.finditer(it["title"])]
-            if proprio and any(f in proprio for f in frases if len(f) >= 9):
+            if proprio and any(f in proprio for f in frases if len(f) >= 16):
                 continue
             it["key"] = key_of(it)
             itens.append(it)
@@ -496,7 +496,7 @@ def main():
         if RUIDO.search(it["title"]):
             continue
         frases = [m.group(0).lower() for m in NOME_RE.finditer(it["title"])]
-        if proprio and any(f in proprio for f in frases if len(f) >= 9):
+        if proprio and any(f in proprio for f in frases if len(f) >= 16):
             continue
         it["key"] = key_of(it)
         itens.append(it)
@@ -522,7 +522,7 @@ def main():
                 continue  # clube estrangeiro sem relevância (não Champions/PT/LNF/seleção/saída)
             por_fonte.setdefault(name, []).append(it)  # p/ tabelas Por fonte
             frases = [m.group(0).lower() for m in NOME_RE.finditer(it["title"])]
-            if proprio and any(f in proprio for f in frases if len(f) >= 9):
+            if proprio and any(f in proprio for f in frases if len(f) >= 16):
                 continue  # já publicado -> fora da timeline
             it["key"] = key_of(it)
             itens.append(it)
