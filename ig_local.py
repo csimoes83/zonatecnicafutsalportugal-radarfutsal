@@ -15,7 +15,7 @@ HANDLES = os.path.join(ROOT, "ig_handles.txt")
 LOTE = 8             # contas por corrida (gentil, para não aquecer o IP)
 ESPACO = 6.0        # segundos entre contas
 RETRIES = 1          # 1 tentativa extra em falha intermitente
-JANELA_H = 168       # 7 dias (pré-época)
+JANELA_H = 336
 UA = ("Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) "
       "AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148")
 HDRS = {"x-ig-app-id": "936619743392459", "User-Agent": UA}

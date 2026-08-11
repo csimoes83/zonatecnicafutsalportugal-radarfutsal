@@ -9,8 +9,8 @@ from datetime import datetime, timedelta, timezone
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
-JANELA_H = 168       # 7 dias (pré-época: notícias são de dias, não de horas)
-JANELA_LENTA = 336   # 14 dias, p/ frentes com pouca notícia fresca (feminino, seleção, PT no estrangeiro)
+JANELA_H = 336       # 14 dias (pré-época pura; apertar quando a liga começar 12 set)
+JANELA_LENTA = 480   # 20 dias p/ frentes lentas (feminino, seleção, PT no estrangeiro)
 FEEDS_LENTOS = {"Futsal Feminino", "Seleção Portugal", "Português no Estrangeiro"}
 MAX_ITENS = 55
 

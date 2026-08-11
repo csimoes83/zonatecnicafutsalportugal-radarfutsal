@@ -9,7 +9,7 @@ import scan
 ROOT = os.path.dirname(os.path.abspath(__file__))
 XCACHE = os.path.join(ROOT, "x_cache.json")
 ESPACO = 5.0        # segundos entre contas (gentil com o nitter)
-JANELA_H = 168
+JANELA_H = 336
 
 
 def main():
