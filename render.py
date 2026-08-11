@@ -51,6 +51,7 @@ def render(itens, por_fonte, data, ok, nfeeds):
 
     # secção por nível (espelha os filtros; usa os itens já classificados)
     NIVEIS = [
+        ("primeira", "primeira", "Primeira mão", "🎯 Fonte oficial", "#0f9d58"),
         ("placard", "pt,placard", "Liga Placard", "🟢 M", "#007d3c"),
         ("feminina", "pt,feminina", "Liga Feminina", "🚺", "#c026d3"),
         ("segunda", "pt,segunda", "2ª Divisão", "🔵 Nacional", "#1e5fd6"),
@@ -140,6 +141,7 @@ def render(itens, por_fonte, data, ok, nfeeds):
  <input id="q" class="search" type="search" placeholder="🔍 Procurar clube, jogador, país…">
  <button id="refresh" class="chip refresh" title="Recarregar a recolha mais recente">↻ Atualizar</button>
  <button class="chip active" data-f="all">Tudo</button>
+ <button class="chip" data-f="primeira">🎯 Primeira mão</button>
  <button class="chip" data-f="placard">🟢 Placard</button>
  <button class="chip" data-f="feminina">🚺 Feminina</button>
  <button class="chip" data-f="segunda">🔵 2ª Div</button>

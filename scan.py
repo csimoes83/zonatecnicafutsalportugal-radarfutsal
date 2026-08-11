@@ -131,6 +131,15 @@ PRIO_PT = re.compile(
     r"barcelona|bar[çc]a|palma|elpozo|movistar|jimbee|rfef|lnfs|uefa futsal|champions|"
     r"ricardinho|bruno coelho|jo[ãa]o matos|higor|f[úu]tbol sala", re.I)
 
+# FONTES PRIMÁRIAS (1ª mão, sites/contas oficiais) — autenticidade > popularidade.
+# Tudo o resto que venha de Google News/jornal é "imprensa" (repetição).
+FONTES_PRIMARIAS = {
+    "Palma Futsal", "ElPozo Murcia", "Movistar Inter", "Jimbee Cartagena",
+    "Valdepeñas", "Osasuna Magna", "Peñíscola", "Santa Coloma", "CROfutsal",
+    "Futsal Dinamo", "Magnus", "Pato Futsal", "LNF Brasil", "Itália C5",
+    "Meta Catania", "Famalicão", "CONMEBOL",
+}
+
 # LIGA PLACARD — prioridade máxima. Nomes dos 12 clubes 26/27 + as contas de IG deles.
 # Casa com o título OU a fonte (apanha posts dos clubes mesmo sem o nome na legenda).
 PLACARD = re.compile(
@@ -561,6 +570,16 @@ def main():
         # seja Placard/2ª/etc), p/ o filtro Jornais mostrar toda a imprensa
         if IMPRENSA.search(it.get("source", "")) and "jornais" not in it["ftag"]:
             it["ftag"] += ",jornais"
+        # AUTENTICIDADE > popularidade: marca fonte PRIMÁRIA (o clube/federação/
+        # jogador a anunciar em 1ª mão via IG/X/site oficial) vs IMPRENSA (Google
+        # News/jornal a repetir). A primeira mão lidera o painel.
+        src = it.get("source", "")
+        primaria = (src.startswith("IG") or src.startswith("X")
+                    or src in FONTES_PRIMARIAS
+                    or ("news.google.com" not in it.get("link", "")
+                        and not IMPRENSA.search(src)))
+        it["_prim"] = 1 if primaria else 0
+        it["ftag"] += ",primeira" if primaria else ",imprensa"
 
     # equilíbrio IG (1/conta, teto global) MAS as competições PT (Placard/Feminina/2ª,
     # prio>=5) estão ISENTAS — mostra-se TUDO o que existir delas
@@ -578,7 +597,7 @@ def main():
         equilibrado.append(it)
     itens = equilibrado
 
-    itens.sort(key=lambda x: (x["prio"], x["when"]), reverse=True)
+    itens.sort(key=lambda x: (x["prio"], x.get("_prim", 0), x["when"]), reverse=True)
     # PORTUGAL DOMINA o painel; o estrangeiro aparece mas apertado. Limite por nível
     # (o mais recente de cada): PT (7-4,1) generoso, estrangeiro (3,2,0) curto.
     por_niv = {}
@@ -588,7 +607,7 @@ def main():
     final = []
     for p in sorted(por_niv, reverse=True):
         final += por_niv[p][:LIM.get(p, 2)]
-    final.sort(key=lambda x: (x["prio"], x["when"]), reverse=True)
+    final.sort(key=lambda x: (x["prio"], x.get("_prim", 0), x["when"]), reverse=True)
     itens = final
 
     LX = timezone(timedelta(hours=1))  # hora de Lisboa (verão)
