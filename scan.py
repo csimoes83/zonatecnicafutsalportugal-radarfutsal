@@ -581,7 +581,8 @@ def main():
         # imprensa/insider NUNCA é primeira mão — nem quando vem do X/IG (ex.: a conta
         # de X do zerozero/Record, ou insiders como Munhana/Candelas). Autenticidade =
         # o clube/federação/jogador a anunciar, não quem repate.
-        primaria = (not IMPRENSA.search(src)) and (
+        agregador = "alert" in src.lower()  # Google Alerts/Alerts Futsal = agrega imprensa
+        primaria = (not IMPRENSA.search(src)) and (not agregador) and (
             src.startswith("IG") or src.startswith("X")
             or src in FONTES_PRIMARIAS
             or "news.google.com" not in it.get("link", ""))
