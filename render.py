@@ -140,8 +140,8 @@ def render(itens, por_fonte, data, ok, nfeeds):
 <div class="controls">
  <input id="q" class="search" type="search" placeholder="🔍 Procurar clube, jogador, país…">
  <button id="refresh" class="chip refresh" title="Recarregar a recolha mais recente">↻ Atualizar</button>
- <button class="chip active" data-f="all">Tudo</button>
- <button class="chip" data-f="primeira">🎯 Primeira mão</button>
+ <button class="chip" data-f="all">Tudo</button>
+ <button class="chip active" data-f="primeira">🎯 Primeira mão</button>
  <button class="chip" data-f="placard">🟢 Placard</button>
  <button class="chip" data-f="feminina">🚺 Feminina</button>
  <button class="chip" data-f="segunda">🔵 2ª Div</button>
@@ -190,6 +190,7 @@ def render(itens, por_fonte, data, ok, nfeeds):
   ch.addEventListener('click',function(){{
    document.querySelectorAll('.chip').forEach(function(x){{if(x.id!=='refresh')x.classList.remove('active')}});
    ch.classList.add('active');apply();}});}});
+ apply();  // arranca já filtrado pelo chip activo (Primeira mão por defeito)
  // auto-atualiza a cada 5 min enquanto o painel estiver aberto
  setInterval(function(){{location.reload(true);}}, 5*60*1000);
 }})();
