@@ -60,6 +60,7 @@ FEEDS = [
     ("Futsal Croácia", "https://news.google.com/rss/search?q=%28futsal%20OR%20%22mali%20nogomet%22%29%20%28Hrvatska%20OR%20%22Futsal%20Dinamo%22%20OR%20%22Novo%20Vrijeme%22%20OR%20reprezentacija%20OR%20Osijek%29&hl=hr&gl=HR&ceid=HR:hr", None),
     ("Futsal Ásia", "https://news.google.com/rss/search?q=futsal%20%28Japan%20OR%20Iran%20OR%20%22AFC%20Futsal%22%20OR%20%22F.League%22%20OR%20%22Asian%20Cup%22%20OR%20Thailand%20OR%20Vietnam%29&hl=en&gl=US&ceid=US:en", None),
     ("Futsal Argentina", "https://news.google.com/rss/search?q=futsal%20%28Argentina%20OR%20%22selecci%C3%B3n%20argentina%20futsal%22%20OR%20AFA%20OR%20%22futsal%20argentino%22%29&hl=es-419&gl=AR&ceid=AR:es", None),
+    ("Futsal África", "https://news.google.com/rss/search?q=futsal%20%28CAF%20OR%20%22Africa%20Cup%20of%20Nations%22%20OR%20Morocco%20OR%20Marrocos%20OR%20Egypt%20OR%20Angola%20OR%20%22African%20futsal%22%20OR%20AFCON%29&hl=en&gl=US&ceid=US:en", None),
     ("CONMEBOL", "https://www.conmebol.com/feed/", "FUTSAL"),
     ("Google Alerts", "https://www.google.com/alerts/feeds/07340303412689524551/4521077332057732674", "TEMA"),
     ("Alerts Futsal", "https://www.google.com/alerts/feeds/07340303412689524551/6715931025412471738", "TEMA"),
@@ -245,7 +246,8 @@ INSTITUCIONAL = re.compile(
     r"calcio a ?5|divisionecalcio|serie a[^.]{0,12}futsal|"
     r"uefa ?futsal|uefafutsal|futsal champions|uefafutsalchampionsleague|"
     r"fifa futsal|futsal world cup|mundial de futsal|"
-    r"futsal fran[çc]a|futsal cro[áa]cia|futsal [áa]sia|futsal argentina|f\.league|f\.?league jap|copa am[ée]rica", re.I)
+    r"futsal fran[çc]a|futsal cro[áa]cia|futsal [áa]sia|futsal argentina|f\.league|f\.?league jap|copa am[ée]rica|"
+    r"\bcaf\b|caf futsal|afcon futsal|africa cup of nations futsal|futsal [áa]frica|futsal africa|africain futsal|conmebol", re.I)
 
 
 def fetch(url):
@@ -574,10 +576,13 @@ def main():
         # jogador a anunciar em 1ª mão via IG/X/site oficial) vs IMPRENSA (Google
         # News/jornal a repetir). A primeira mão lidera o painel.
         src = it.get("source", "")
-        primaria = (src.startswith("IG") or src.startswith("X")
-                    or src in FONTES_PRIMARIAS
-                    or ("news.google.com" not in it.get("link", "")
-                        and not IMPRENSA.search(src)))
+        # imprensa/insider NUNCA é primeira mão — nem quando vem do X/IG (ex.: a conta
+        # de X do zerozero/Record, ou insiders como Munhana/Candelas). Autenticidade =
+        # o clube/federação/jogador a anunciar, não quem repate.
+        primaria = (not IMPRENSA.search(src)) and (
+            src.startswith("IG") or src.startswith("X")
+            or src in FONTES_PRIMARIAS
+            or "news.google.com" not in it.get("link", ""))
         it["_prim"] = 1 if primaria else 0
         it["ftag"] += ",primeira" if primaria else ",imprensa"
 
