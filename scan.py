@@ -611,10 +611,17 @@ def main():
     por_niv = {}
     for it in itens:
         por_niv.setdefault(it["prio"], []).append(it)
-    LIM = {7: 99, 6: 99, 5: 99, 4: 20, 3: 6, 2: 12, 1: 12, 0: 4}  # competições PT sem teto (pré-época)
+    LIM = {7: 99, 6: 99, 5: 99, 4: 20, 3: 6, 1: 12, 0: 4}  # competições PT sem teto (pré-época)
+    LIM2_ES, LIM2_BR = 10, 10   # nível 2: Espanha e Brasil com tetos SEPARADOS (senão a
+                                # Espanha, mais volumosa, engole a LNF/Brasil)
     final = []
     for p in sorted(por_niv, reverse=True):
-        final += por_niv[p][:LIM.get(p, 2)]
+        if p == 2:  # separar ES e BR para a LNF não ser expulsa pela Espanha
+            es = [it for it in por_niv[2] if "es" in it["ftag"].split(",")][:LIM2_ES]
+            br = [it for it in por_niv[2] if "br" in it["ftag"].split(",")][:LIM2_BR]
+            final += es + br
+        else:
+            final += por_niv[p][:LIM.get(p, 2)]
     final.sort(key=lambda x: (x["prio"], x.get("_prim", 0), x["when"]), reverse=True)
     itens = final
 
