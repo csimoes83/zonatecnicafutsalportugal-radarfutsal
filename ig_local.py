@@ -87,7 +87,10 @@ def main():
                   "portimonense_futsal", "oficial_upvn", "leoesportosalvo", "electricofc_oficial",
                   "scutorreensemodalidades", "fcfamalicaomodalidades", "maisrioave", "scfz_futsal",
                   "fcportosports", "ligaplacard", "foconofutsal", "gustavomunana", "futsalfemininonews",
-                  "gcrnunalvaresfutsal", "maiafutsal", "atleticocp"]
+                  "gcrnunalvaresfutsal", "maiafutsal", "atleticocp",
+                  # Espanha (vivem no X, morto) -> garantir 1ª mão via IG, logo a seguir aos PT
+                  "elpozomurciafsoficial", "intermovistar", "fcbfutsal", "jaenfutbolsala",
+                  "c.d.xota", "fsciudaddelvino", "fsgarcia", "jimbeecartagena", "riberanavarrafs"]
     prio = [h for h in PRIORIDADE if h in handles]
     resto = [h for h in (handles[pos:] + handles[:pos]) if h not in prio]
     lote = prio + resto
