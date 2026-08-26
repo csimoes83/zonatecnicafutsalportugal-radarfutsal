@@ -63,7 +63,6 @@ FEEDS = [
     ("Futsal Argentina", "https://news.google.com/rss/search?q=futsal%20%28Argentina%20OR%20%22selecci%C3%B3n%20argentina%20futsal%22%20OR%20AFA%20OR%20%22futsal%20argentino%22%29&hl=es-419&gl=AR&ceid=AR:es", None),
     ("Futsal África", "https://news.google.com/rss/search?q=futsal%20%28CAF%20OR%20%22Africa%20Cup%20of%20Nations%22%20OR%20Morocco%20OR%20Marrocos%20OR%20Egypt%20OR%20Angola%20OR%20%22African%20futsal%22%20OR%20AFCON%29&hl=en&gl=US&ceid=US:en", None),
     ("CONMEBOL", "https://www.conmebol.com/feed/", "FUTSAL"),
-    ("YT · LNF Brasil", "https://www.youtube.com/feeds/videos.xml?channel_id=UCBDt7m7iQrrz6PMFWfV5tGQ", None),
     ("Google Alerts", "https://www.google.com/alerts/feeds/07340303412689524551/4521077332057732674", "TEMA"),
     ("Alerts Futsal", "https://www.google.com/alerts/feeds/07340303412689524551/6715931025412471738", "TEMA"),
     ("X · Palma", "https://nitter.net/PalmaFutsal/rss", "X"),
