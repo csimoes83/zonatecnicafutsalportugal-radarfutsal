@@ -11,6 +11,8 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
 JANELA_H = 336       # 14 dias (pré-época pura; apertar quando a liga começar 12 set)
 JANELA_LENTA = 480   # 20 dias p/ frentes lentas (feminino, seleção, PT no estrangeiro)
+X_JANELA_H = 96      # X/Redes: só 4 dias — se o nitter morre, o filtro fica vazio (honesto)
+                     # em vez de mostrar tweets presos de há semanas; reenche ao reviver
 FEEDS_LENTOS = {"Futsal Feminino", "Seleção Portugal", "Português no Estrangeiro"}
 MAX_ITENS = 55
 
@@ -510,8 +512,9 @@ def main():
             itens.append(it)
     # X/Twitter vem da cache local (x_cache.json, puxada no Mac via nitter) — mesma
     # lógica dos feeds. A cloud NÃO tenta o nitter (IP de datacenter é bloqueado).
+    corte_x = agora - timedelta(hours=X_JANELA_H)
     for it in x_cache_itens():
-        if not it["when"] or it["when"] < corte:
+        if not it["when"] or it["when"] < corte_x:
             continue
         if RUIDO.search(it["title"]):
             continue
