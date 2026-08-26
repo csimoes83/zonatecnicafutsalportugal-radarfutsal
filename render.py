@@ -102,12 +102,13 @@ def render(itens, por_fonte, data, ok, nfeeds):
 
     def chip(f, label, count=True):
         n = f' <span class="cnt">{C.get(f, 0)}</span>' if count and f in C else ''
-        act = ' active' if f == 'primeira' else ''
+        act = ' active' if f == 'all' else ''
         return f'<button class="chip{act}" data-f="{f}">{label}{n}</button>'
 
     chips = "\n ".join([
         chip("all", "Tudo"),
         chip("primeira", "🎯 Primeira mão"),
+        chip("jornais", "📰 Jornais"),
         chip("placard", "🟢 Placard"),
         chip("feminina", "🚺 Feminina"),
         chip("segunda", "🔵 2ª Div"),
@@ -115,7 +116,6 @@ def render(itens, por_fonte, data, ok, nfeeds):
         chip("es", "🇪🇸 ES"),
         chip("br", "🇧🇷 BR"),
         chip("mundo", "🌍 Intl"),
-        chip("jornais", "📰 Jornais"),
         chip("social", "𝕏 Redes"),
     ])
 
@@ -261,7 +261,7 @@ def render(itens, por_fonte, data, ok, nfeeds):
   ch.addEventListener('click',function(){{
    document.querySelectorAll('.chip').forEach(function(x){{x.classList.remove('active')}});
    ch.classList.add('active');apply();}});}});
- apply();  // arranca já filtrado pelo chip activo (Primeira mão por defeito)
+ apply();  // arranca no chip activo (Tudo por defeito)
  setInterval(function(){{location.reload(true);}}, 5*60*1000);
 }})();
 </script>
