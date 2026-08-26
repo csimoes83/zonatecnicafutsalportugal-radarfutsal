@@ -143,3 +143,6 @@ zerozerofutsal
 # --- Espanha (clubes vivem no X, morto; captamos via IG) ---
 elpozomurciafsoficial
 fsgarcia
+
+# --- Itália (Serie A / Calcio a 5) ---
+napolifutsal2012
