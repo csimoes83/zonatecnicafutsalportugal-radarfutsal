@@ -97,6 +97,7 @@ FEEDS = [
     ("X · Sporting CP", "https://nitter.net/SCPModalidades/rss", "X_FUTSAL"),
     ("X · Benfica Modalidades", "https://nitter.net/modalidadesslb/rss", "X_FUTSAL"),
     ("X · SC Braga Modalidades", "https://nitter.net/Modalidades_SCB/rss", "X_FUTSAL"),
+    ("X · Famalicão", "https://nitter.net/FCF1931_Oficial/rss", "X_FUTSAL"),
     ("X · Seleção Portugal", "https://nitter.net/selecaoportugal/rss", "X_FUTSAL"),
     ("X · Peñíscola", "https://nitter.net/peniscola/rss", "X"),
     ("X · Movistar Inter", "https://nitter.net/InterMovistar/rss", "X"),
