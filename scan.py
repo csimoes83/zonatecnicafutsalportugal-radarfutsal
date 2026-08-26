@@ -38,6 +38,7 @@ FEEDS = [
     ("LNF Brasil", "https://lnfoficial.com.br/noticias/feed/", None),
     ("Itália C5", "https://www.divisionecalcioa5.it/feed/", None),
     ("Meta Catania", "https://metacatania.it/feed/", None),
+    ("Manzanares FS", "https://www.manzanaresfs.com/feed/", None),
     ("Famalicão", "https://www.fcfamalicao.pt/feed/", "FUTSAL"),
     ("zerozero", "https://www.zerozero.pt/rss/noticias.php", "FUTSAL"),
     ("Record", "https://www.record.pt/rss", "FUTSAL"),
@@ -141,7 +142,7 @@ FONTES_PRIMARIAS = {
     "Palma Futsal", "ElPozo Murcia", "Movistar Inter", "Jimbee Cartagena",
     "Valdepeñas", "Osasuna Magna", "Peñíscola", "Santa Coloma", "CROfutsal",
     "Futsal Dinamo", "Magnus", "Pato Futsal", "LNF Brasil", "Itália C5",
-    "Meta Catania", "Famalicão", "CONMEBOL",
+    "Meta Catania", "Manzanares FS", "Famalicão", "CONMEBOL",
 }
 
 # LIGA PLACARD — prioridade máxima. Nomes dos 12 clubes 26/27 + as contas de IG deles.

@@ -139,3 +139,7 @@ fifa
 # + sites futsal (Futsal Planet, zerozero futsal)
 futsalplanet
 zerozerofutsal
+
+# --- Espanha (clubes vivem no X, morto; captamos via IG) ---
+elpozomurciafsoficial
+fsgarcia
