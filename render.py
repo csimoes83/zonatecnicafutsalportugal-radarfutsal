@@ -61,7 +61,8 @@ def render(itens, por_fonte, data, ok, nfeeds):
             cor, lbl = NIVEL_INFO.get(p, ("#6b7280", "🌍 Mundo"))
         prim = "primeira" in toks
         selo = '<span class="selo prim">🎯 1ª mão</span>' if prim else '<span class="selo imp">📰 imprensa</span>'
-        tl.append(f'''    <article class="card" data-f="{df}" style="--c:{cor}">
+        ts = int(it["when"].timestamp())
+        tl.append(f'''    <article class="card" data-f="{df}" data-ts="{ts}" style="--c:{cor}">
       <div class="k"><span class="src">{esc(it["source"])}</span>{selo}<span class="lvl">{lbl}</span></div>
       <h3><a href="{esc(it["link"])}" target="_blank" rel="noopener">{esc(it["title"])}</a></h3>
       <div class="meta"><span class="ago">{rel(w, now)}</span><span class="dt">{w:%d/%m · %H:%M}</span></div>
@@ -239,14 +240,23 @@ def render(itens, por_fonte, data, ok, nfeeds):
 <script>
 (function(){{
  var q=document.getElementById('q'), shown=document.getElementById('shown');
+ var TL=document.getElementById('timeline');
+ var ORD=Array.prototype.slice.call(TL.querySelectorAll('.card')); // ordem original (curada)
  function apply(){{
   var s=(q.value||'').toLowerCase().trim();
-  var f=document.querySelector('.chip.active').dataset.f, vis=0;
+  var f=document.querySelector('.chip.active').dataset.f, vis=0, visiveis=[];
   document.querySelectorAll('#timeline .card').forEach(function(c){{
    var okF=(f==='all')||(c.dataset.f||'').split(',').indexOf(f)>=0;
    var okS=!s||c.textContent.toLowerCase().indexOf(s)>=0;
-   var v=okF&&okS; c.classList.toggle('hidden', !v); if(v)vis++;
+   var v=okF&&okS; c.classList.toggle('hidden', !v); if(v){{vis++;visiveis.push(c);}}
   }});
+  // num filtro específico, mostra o MAIS RECENTE primeiro (por data); em "Tudo" mantém a ordem curada
+  if(f!=='all'){{
+   visiveis.sort(function(a,b){{return (b.dataset.ts||0)-(a.dataset.ts||0);}});
+   visiveis.forEach(function(c){{TL.appendChild(c);}});
+  }} else {{
+   ORD.forEach(function(c){{TL.appendChild(c);}});
+  }}
   document.querySelectorAll('#fontes .src').forEach(function(c){{
    var okF=(f==='all')||(c.dataset.f||'').split(',').indexOf(f)>=0;
    var okS=!s||c.textContent.toLowerCase().indexOf(s)>=0;
