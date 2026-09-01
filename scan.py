@@ -405,22 +405,23 @@ def instagram_apify():
     token = os.environ.get("APIFY_TOKEN", "").strip()
     if not token:
         return _ig_load_cache()
-    # poupança: cada varredura custa Apify -> só consultar o IG 4x/dia
-    # (08/12/16/20 UTC). Forçar só com o input explícito force_ig=true
-    # (NÃO nos empurrões automáticos do Mac de 30/30min, senão o custo dispara).
+    # poupança: cada varredura custa Apify. Em vez de horas fixas (o cron do GitHub
+    # salta/atrasa, por isso quase nunca calhava nas 8/12/16/20 UTC), dispara "se já
+    # passaram >= INTERVALO horas desde a última". Assim qualquer corrida (os empurrões
+    # do Mac chegam a toda a hora) mantém o IG fresco, a custo ~6x/dia no máximo.
+    INTERVALO_APIFY_H = 4
     forcar = os.environ.get("FORCE_IG", "").lower() == "true"
     agora_ig = datetime.now(timezone.utc)
-    bucket = agora_ig.strftime("%Y-%m-%d-%H")  # janela horária
     marca = os.path.join(ROOT, "ig_last.txt")
     if not forcar:
-        if agora_ig.hour not in (8, 12, 16, 20):
-            return _ig_load_cache()   # fora de janela: mantém os posts já guardados
-        # guarda: no máx 1 varredura paga por janela horária (o Mac empurra 2x/hora)
         try:
-            if open(marca, encoding="utf-8").read().strip() == bucket:
-                return _ig_load_cache()
+            ult = datetime.fromisoformat(open(marca, encoding="utf-8").read().strip())
+            if ult.tzinfo is None:
+                ult = ult.replace(tzinfo=timezone.utc)
+            if (agora_ig - ult).total_seconds() < INTERVALO_APIFY_H * 3600:
+                return _ig_load_cache()   # ainda dentro do intervalo: mantém os posts guardados
         except Exception:
-            pass
+            pass   # sem marca válida -> corre agora
     url = ("https://api.apify.com/v2/acts/sones~instagram-posts-scraper-lowcost/"
            "run-sync-get-dataset-items?token=" + urllib.parse.quote(token))
     newer = (datetime.now(timezone.utc) - timedelta(hours=JANELA_H)).strftime("%Y-%m-%d")
@@ -476,8 +477,8 @@ def instagram_apify():
                     "source": ("IG · @" + user) if user else "IG",
                     "link": link})
         n_ok += 1
-    try:  # carimba a janela como já varrida (evita 2ª varredura paga na mesma hora)
-        open(marca, "w", encoding="utf-8").write(bucket)
+    try:  # carimba a hora desta varredura (para respeitar o intervalo mínimo)
+        open(marca, "w", encoding="utf-8").write(agora_ig.isoformat())
     except Exception:
         pass
     if out:
