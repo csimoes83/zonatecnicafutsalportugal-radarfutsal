@@ -45,6 +45,7 @@ FEEDS = [
     ("zerozero", "https://www.zerozero.pt/rss/noticias.php", "FUTSAL"),
     ("Record", "https://www.record.pt/rss", "FUTSAL"),
     ("Imprensa", "https://news.google.com/rss/search?q=futsal%20%28site%3Arecord.pt%20OR%20site%3Aojogo.pt%20OR%20site%3Amaisfutebol.iol.pt%20OR%20site%3Aabola.pt%20OR%20site%3Atvi24.iol.pt%20OR%20site%3Asapo.pt%20OR%20site%3Artp.pt%20OR%20site%3Adn.pt%20OR%20site%3Ajn.pt%29&hl=pt-PT&gl=PT&ceid=PT:pt", "FUTSAL"),
+    ("FPF", "https://news.google.com/rss/search?q=site%3Afpf.pt%20%28futsal%20OR%20%22Liga%20Placard%22%20OR%20%22sele%C3%A7%C3%A3o%20de%20futsal%22%20OR%20%22futsal%20feminino%22%29&hl=pt-PT&gl=PT&ceid=PT:pt", "FUTSAL"),
     # Google News p/ encher níveis (o melhor do futsal, mesmo com IG calado):
     ("Futsal Feminino", "https://news.google.com/rss/search?q=futsal%20%28feminino%20OR%20feminina%20OR%20%22liga%20feminina%22%20OR%20%22sele%C3%A7%C3%A3o%20feminina%22%29%20%28Portugal%20OR%20Benfica%20OR%20Sporting%20OR%20Nun%20OR%20Maia%20OR%20%22Atl%C3%A9tico%22%20OR%20Braga%20OR%20treinadora%20OR%20Espanha%29&hl=pt-PT&gl=PT&ceid=PT:pt", "FUTSAL"),
     ("Fútbol Sala", "https://news.google.com/rss/search?q=%22f%C3%BAtbol%20sala%22%20OR%20futsal%20%28Espa%C3%B1a%20OR%20Primera%20OR%20LNFS%20OR%20Palma%20OR%20ElPozo%20OR%20Movistar%20OR%20%22Bar%C3%A7a%22%20OR%20Jimbee%20OR%20Osasuna%20OR%20Valdepe%C3%B1as%20OR%20%22Ja%C3%A9n%22%20OR%20Cartagena%20OR%20Pe%C3%B1%C3%ADscola%29&hl=es&gl=ES&ceid=ES:es", None),
@@ -145,7 +146,7 @@ FONTES_PRIMARIAS = {
     "Palma Futsal", "ElPozo Murcia", "Movistar Inter", "Jimbee Cartagena",
     "Valdepeñas", "Osasuna Magna", "Peñíscola", "Santa Coloma", "CROfutsal",
     "Futsal Dinamo", "Magnus", "Pato Futsal", "LNF Brasil", "Itália C5",
-    "Meta Catania", "Manzanares FS", "Famalicão", "CONMEBOL",
+    "Meta Catania", "Manzanares FS", "FPF", "Famalicão", "CONMEBOL",
 }
 
 # LIGA PLACARD — prioridade máxima. Nomes dos 12 clubes 26/27 + as contas de IG deles.
