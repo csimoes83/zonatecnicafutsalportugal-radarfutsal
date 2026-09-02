@@ -63,6 +63,7 @@ FEEDS = [
     ("Futsal Croácia", "https://news.google.com/rss/search?q=%28futsal%20OR%20%22mali%20nogomet%22%29%20%28Hrvatska%20OR%20%22Futsal%20Dinamo%22%20OR%20%22Novo%20Vrijeme%22%20OR%20reprezentacija%20OR%20Osijek%29&hl=hr&gl=HR&ceid=HR:hr", None),
     ("Futsal Ásia", "https://news.google.com/rss/search?q=futsal%20%28Japan%20OR%20Iran%20OR%20%22AFC%20Futsal%22%20OR%20%22F.League%22%20OR%20%22Asian%20Cup%22%20OR%20Thailand%20OR%20Vietnam%29&hl=en&gl=US&ceid=US:en", None),
     ("Futsal Argentina", "https://news.google.com/rss/search?q=futsal%20%28Argentina%20OR%20%22selecci%C3%B3n%20argentina%20futsal%22%20OR%20AFA%20OR%20%22futsal%20argentino%22%29&hl=es-419&gl=AR&ceid=AR:es", None),
+    ("UEFA Futsal CL", "https://news.google.com/rss/search?q=%28UEFA%20Futsal%20Champions%20League%29%20OR%20%28Futsal%20Champions%20League%29%20OR%20%28%22Liga%20dos%20Campe%C3%B5es%22%20futsal%29%20OR%20%28futsal%20%22Champions%22%29&hl=pt-PT&gl=PT&ceid=PT:pt", "FUTSAL"),
     ("Futsal África", "https://news.google.com/rss/search?q=futsal%20%28CAF%20OR%20%22Africa%20Cup%20of%20Nations%22%20OR%20Morocco%20OR%20Marrocos%20OR%20Egypt%20OR%20Angola%20OR%20%22African%20futsal%22%20OR%20AFCON%29&hl=en&gl=US&ceid=US:en", None),
     ("CONMEBOL", "https://www.conmebol.com/feed/", "FUTSAL"),
     ("Google Alerts", "https://www.google.com/alerts/feeds/07340303412689524551/4521077332057732674", "TEMA"),
