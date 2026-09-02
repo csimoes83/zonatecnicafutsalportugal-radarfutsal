@@ -1,0 +1,8 @@
+# Páginas de FACEBOOK de futsal (só páginas DEDICADAS a futsal — sem futebol 11).
+# Uma por linha, o slug da página (o que vem depois de facebook.com/).
+# Puxadas via Apify na mesma corrida do IG. Linhas com # são ignoradas.
+
+# --- Liga Placard (fortes no Facebook) ---
+scferreiradozezerefutsal
+FutsalDoUpvn
+upvn1

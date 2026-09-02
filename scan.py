@@ -491,6 +491,123 @@ def instagram_apify():
     return out
 
 
+# ---- Facebook via Apify (páginas de futsal dedicadas; mesmo modelo do IG) ----
+FB_CACHE = os.path.join(ROOT, "fb_cache.json")
+FB_INTERVALO_H = 4   # como o IG: no máx 1 varredura FB a cada 4h
+
+def _load_fb_pages():
+    try:
+        linhas = open(os.path.join(ROOT, "fb_pages.txt"), encoding="utf-8").read().splitlines()
+    except Exception:
+        return []
+    hs, vistos = [], set()
+    for ln in linhas:
+        ln = ln.strip()
+        if not ln or ln.startswith("#") or ln in vistos:
+            continue
+        vistos.add(ln); hs.append(ln)
+    return hs
+
+FB_PAGES = _load_fb_pages()
+
+def _fb_load_cache():
+    try:
+        raw = json.load(open(FB_CACHE, encoding="utf-8"))
+    except Exception:
+        return []
+    out = []
+    for it in raw:
+        try:
+            it["when"] = datetime.fromisoformat(it["when"]); out.append(it)
+        except Exception:
+            pass
+    return out
+
+def _fb_save_cache(items):
+    try:
+        json.dump([{**it, "when": it["when"].isoformat()} for it in items],
+                  open(FB_CACHE, "w", encoding="utf-8"), ensure_ascii=False)
+    except Exception:
+        pass
+
+def facebook_apify():
+    """Puxa posts das páginas de FB de futsal via Apify (mesmo intervalo/modelo do IG).
+    Só páginas DEDICADAS a futsal -> aplica-se só RUIDO (outros desportos), sem risco de
+    futebol 11. Devolve a cache entre varreduras para persistir no painel."""
+    token = os.environ.get("APIFY_TOKEN", "").strip()
+    if not token or not FB_PAGES:
+        return _fb_load_cache()
+    forcar = os.environ.get("FORCE_IG", "").lower() == "true"
+    agora_fb = datetime.now(timezone.utc)
+    marca = os.path.join(ROOT, "fb_last.txt")
+    if not forcar:
+        try:
+            ult = datetime.fromisoformat(open(marca, encoding="utf-8").read().strip())
+            if ult.tzinfo is None:
+                ult = ult.replace(tzinfo=timezone.utc)
+            if (agora_fb - ult).total_seconds() < FB_INTERVALO_H * 3600:
+                return _fb_load_cache()
+        except Exception:
+            pass
+    url = ("https://api.apify.com/v2/acts/apify~facebook-posts-scraper/"
+           "run-sync-get-dataset-items?token=" + urllib.parse.quote(token))
+    body = json.dumps({
+        "startUrls": [{"url": f"https://www.facebook.com/{p}"} for p in FB_PAGES],
+        "resultsLimit": 3,   # últimos posts por página (barato)
+    }).encode()
+    req = urllib.request.Request(url, data=body,
+                                headers={**UA, "Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=180) as r:
+            data = json.loads(r.read())
+    except Exception as e:
+        print("FB/Apify falhou:", e)
+        return _fb_load_cache()
+
+    def g(p, *keys):
+        for k in keys:
+            v = p.get(k)
+            if v:
+                return v
+        return ""
+    corte = agora_fb - timedelta(hours=JANELA_H)
+    out, n_ok = [], 0
+    for p in data:
+        txt = str(g(p, "text", "message", "postText", "title") or "").replace("\n", " ").strip()
+        ts = g(p, "time", "timestamp", "date", "publishedTime", "pubDate")
+        link = g(p, "url", "postUrl", "facebookUrl", "topLevelUrl")
+        pagina = g(p, "pageName", "user", "authorName", "pageTitle") or ""
+        if isinstance(pagina, dict):
+            pagina = pagina.get("name", "")
+        if not txt or not ts:
+            continue
+        try:
+            if isinstance(ts, (int, float)):
+                w = datetime.fromtimestamp(ts, tz=timezone.utc)
+            else:
+                w = datetime.fromisoformat(str(ts).replace("Z", "+00:00"))
+        except Exception:
+            continue
+        if w < corte:
+            continue
+        if RUIDO.search(txt):   # corta outros desportos/ruído
+            continue
+        out.append({"title": txt[:120], "when": w,
+                    "source": ("FB · " + str(pagina)[:30]) if pagina else "FB",
+                    "link": link or f"https://www.facebook.com/{FB_PAGES[0]}"})
+        n_ok += 1
+    try:
+        open(marca, "w", encoding="utf-8").write(agora_fb.isoformat())
+    except Exception:
+        pass
+    if out:
+        _fb_save_cache(out)
+    else:
+        out = _fb_load_cache()
+    print(f"FB/Apify: {len(data)} brutos -> {n_ok} posts (cache atualizada)")
+    return out
+
+
 def main():
     agora = datetime.now(timezone.utc)
     corte = agora - timedelta(hours=JANELA_H)
@@ -508,6 +625,20 @@ def main():
                 continue
             if estrangeiro_corta(it):
                 continue  # clube estrangeiro sem relevância (não Champions/PT/LNF/seleção/saída)
+            frases = [m.group(0).lower() for m in NOME_RE.finditer(it["title"])]
+            if proprio and any(f in proprio for f in frases if len(f) >= 16):
+                continue
+            it["key"] = key_of(it)
+            itens.append(it)
+    # Facebook (páginas de futsal / Modalidades dos grandes) via Apify
+    fb_itens = facebook_apify()
+    if fb_itens:
+        ok += 1
+        for it in fb_itens:
+            if not it["when"] or it["when"] < corte:
+                continue
+            if RUIDO.search(it["title"]):
+                continue  # corta outras modalidades (basquete, andebol...) e ruído
             frases = [m.group(0).lower() for m in NOME_RE.finditer(it["title"])]
             if proprio and any(f in proprio for f in frases if len(f) >= 16):
                 continue
