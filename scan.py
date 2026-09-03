@@ -496,19 +496,26 @@ FB_CACHE = os.path.join(ROOT, "fb_cache.json")
 FB_INTERVALO_H = 4   # como o IG: no máx 1 varredura FB a cada 4h
 
 def _load_fb_pages():
+    """Devolve (lista de slugs, conjunto de slugs que precisam de filtro futsal)."""
     try:
         linhas = open(os.path.join(ROOT, "fb_pages.txt"), encoding="utf-8").read().splitlines()
     except Exception:
-        return []
-    hs, vistos = [], set()
+        return [], set()
+    hs, filtro, vistos = [], set(), set()
     for ln in linhas:
         ln = ln.strip()
-        if not ln or ln.startswith("#") or ln in vistos:
+        if not ln or ln.startswith("#"):
             continue
-        vistos.add(ln); hs.append(ln)
-    return hs
+        partes = ln.split()
+        slug = partes[0]
+        if slug in vistos:
+            continue
+        vistos.add(slug); hs.append(slug)
+        if len(partes) > 1 and partes[1].upper() == "FUTSAL":
+            filtro.add(slug)
+    return hs, filtro
 
-FB_PAGES = _load_fb_pages()
+FB_PAGES, FB_FILTRO = _load_fb_pages()
 
 def _fb_load_cache():
     try:
@@ -591,6 +598,11 @@ def facebook_apify():
         if w < corte:
             continue
         if RUIDO.search(txt):   # corta outros desportos/ruído
+            continue
+        # páginas GERAIS (com futebol) -> só passam posts de futsal
+        hay_pag = (str(link) + " " + str(pagina)).lower()
+        pag_slug = next((s for s in FB_FILTRO if s.lower() in hay_pag), None)
+        if pag_slug and not FUTSAL_RE.search(txt):
             continue
         out.append({"title": txt[:120], "when": w,
                     "source": ("FB · " + str(pagina)[:30]) if pagina else "FB",

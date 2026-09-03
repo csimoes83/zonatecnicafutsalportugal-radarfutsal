@@ -1,8 +1,13 @@
-# Páginas de FACEBOOK de futsal (só páginas DEDICADAS a futsal — sem futebol 11).
-# Uma por linha, o slug da página (o que vem depois de facebook.com/).
+# Páginas de FACEBOOK de futsal. Uma por linha: o slug (o que vem depois de facebook.com/).
+# Acrescenta " FUTSAL" à frente do slug se a página for GERAL do clube (tem futebol 11):
+# nesse caso só passam os posts que falem de futsal (evita fuga de futebol).
 # Puxadas via Apify na mesma corrida do IG. Linhas com # são ignoradas.
 
-# --- Liga Placard (fortes no Facebook) ---
+# --- Páginas de FUTSAL dedicadas (confiança total) ---
 scferreiradozezerefutsal
 FutsalDoUpvn
-upvn1
+FutsalPortimonense
+leoesportosalvo
+
+# --- Páginas GERAIS do clube (têm futebol -> só passam posts de futsal) ---
+electricofc FUTSAL
