@@ -5,9 +5,9 @@
 
 # --- Páginas de FUTSAL dedicadas (confiança total) ---
 scferreiradozezerefutsal
-FutsalDoUpvn
 FutsalPortimonense
 leoesportosalvo
 
-# --- Páginas GERAIS do clube (têm futebol -> só passam posts de futsal) ---
+# --- Páginas GERAIS do clube (têm outros desportos -> só passam posts de futsal) ---
 electricofc FUTSAL
+UPVendaNova FUTSAL
