@@ -3,11 +3,13 @@
 # nesse caso só passam os posts que falem de futsal (evita fuga de futebol).
 # Puxadas via Apify na mesma corrida do IG. Linhas com # são ignoradas.
 
-# --- Páginas de FUTSAL dedicadas / futsal-first (confiança total) ---
+# --- Páginas de FUTSAL dedicadas / futsal-first / Modalidades (confiança total) ---
 scferreiradozezerefutsal
 FutsalPortimonense
 leoesportosalvo
 UPVendaNova
+AdFundaoFutsal
+sportclubeuniaotorreensemodalidades
 
 # --- Páginas GERAIS do clube (têm futebol -> só passam posts de futsal) ---
 electricofc FUTSAL
