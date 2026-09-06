@@ -152,13 +152,14 @@ def render(itens, por_fonte, data, ok, nfeeds):
  .refresh{{padding:9px 14px;border-radius:11px;border:1px solid var(--acc);background:transparent;
   color:var(--acc);font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap}}
  .refresh:active{{transform:scale(.96)}}
- .chips{{display:flex;gap:8px;margin-top:10px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;scrollbar-width:none}}
+ .chips{{display:flex;gap:2px;margin-top:12px;overflow-x:auto;padding:0;border-bottom:1px solid var(--line);-webkit-overflow-scrolling:touch;scrollbar-width:none}}
  .chips::-webkit-scrollbar{{display:none}}
- .chip{{display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:22px;border:1px solid var(--line);
-  background:var(--panel);color:var(--muted);font-size:12.5px;cursor:pointer;white-space:nowrap;transition:.12s}}
- .chip:hover{{border-color:#39404e;color:var(--ink)}}
- .chip.active{{background:linear-gradient(92deg,var(--acc),#e0562a);border-color:var(--acc);color:#fff;font-weight:700}}
- .chip .cnt{{font-size:11px;background:rgba(255,255,255,.09);color:inherit;border-radius:20px;padding:1px 7px;min-width:20px;text-align:center}}
+ .chip{{display:inline-flex;align-items:center;gap:7px;padding:10px 15px;border:0;border-bottom:2.5px solid transparent;margin-bottom:-1px;
+  background:transparent;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.14s}}
+ .chip:hover{{color:var(--ink)}}
+ .chip.active{{color:var(--ink);border-bottom-color:var(--acc)}}
+ .chip .cnt{{font-size:11px;font-weight:700;background:var(--chip);color:var(--muted);border-radius:20px;padding:1px 7px;min-width:20px;text-align:center;transition:.14s}}
+ .chip.active .cnt{{background:var(--acc);color:#fff}}
  .chip.active .cnt{{background:rgba(0,0,0,.22)}}
  .barinfo{{display:flex;align-items:center;gap:8px;margin:20px 0 12px}}
  .barinfo .sec{{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:700}}
