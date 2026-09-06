@@ -226,7 +226,7 @@ def render(itens, por_fonte, data, ok, nfeeds):
  </div>
 </div>
 <div class="barinfo">
- <span class="sec">🆕 Novo · últimas 2 semanas</span>
+ <span class="sec" id="scope">🆕 Novo · últimas 2 semanas</span>
  <span class="shown" id="shown"></span>
 </div>
 <div class="grid" id="timeline">
@@ -243,6 +243,21 @@ def render(itens, por_fonte, data, ok, nfeeds):
  var q=document.getElementById('q'), shown=document.getElementById('shown');
  var TL=document.getElementById('timeline');
  var ORD=Array.prototype.slice.call(TL.querySelectorAll('.card')); // ordem original (curada)
+ var scopeEl=document.getElementById('scope');
+ // de que FONTES/locais vem cada aba (mostra por baixo das abas ao clicar)
+ var SCOPE={{
+  all:'🆕 Tudo o que o radar apanhou · todas as fontes',
+  primeira:'🎯 Fonte direta — clubes, federações e jogadores (Instagram, Facebook, sites oficiais)',
+  jornais:'📰 Imprensa — Record, O Jogo, A Bola, Maisfutebol, SAPO, RTP, zerozero, FPF',
+  placard:'🟢 Os 12 clubes da Liga Placard — IG/Facebook oficiais + imprensa',
+  feminina:'🚺 Futsal feminino — clubes, Seleção e imprensa',
+  segunda:'🔵 2ª e 3ª Divisão nacional — clubes + Associações de Futebol',
+  pt:'🇵🇹 Tudo o que é português',
+  es:'🇪🇸 Espanha — ElPozo, Palma, Barça, Jaén, Movistar, Jimbee, Osasuna, Valdepeñas... + Fútbol Sala',
+  br:'🇧🇷 Brasil — LNF oficial, Magnus, Jaraguá, ACBF, Pato... + imprensa BR',
+  mundo:'🌍 Internacional — UEFA, CONMEBOL, Itália, França, Croácia, Polónia, Ásia, África',
+  social:'𝕏 X / Twitter — via nitter (em pausa; volta quando reviver)'
+ }};
  function apply(){{
   var s=(q.value||'').toLowerCase().trim();
   var f=document.querySelector('.chip.active').dataset.f, vis=0, visiveis=[];
@@ -264,6 +279,7 @@ def render(itens, por_fonte, data, ok, nfeeds):
    c.classList.toggle('hidden', !(okF&&okS));
   }});
   if(shown) shown.innerHTML='A mostrar <b>'+vis+'</b>';
+  if(scopeEl) scopeEl.textContent=SCOPE[f]||SCOPE.all;
  }}
  q.addEventListener('input',apply);
  var refresh=document.getElementById('refresh');
