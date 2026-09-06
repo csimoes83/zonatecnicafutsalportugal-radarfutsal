@@ -67,7 +67,7 @@ def render(itens, por_fonte, data, ok, nfeeds):
       <h3><a href="{esc(it["link"])}" target="_blank" rel="noopener">{esc(it["title"])}</a></h3>
       <div class="meta"><span class="ago">{rel(w, now)}</span><span class="dt">{w:%d/%m · %H:%M}</span></div>
     </article>''')
-    timeline = "\n".join(tl) if tl else '<div class="empty">Sem novidades nas últimas 2 semanas.</div>'
+    timeline = "\n".join(tl) if tl else '<div class="empty">Sem novidades nos últimos 10 dias.</div>'
 
     # ---- secção por nível (espelha os filtros) ----
     NIVEIS = [
@@ -226,7 +226,7 @@ def render(itens, por_fonte, data, ok, nfeeds):
  </div>
 </div>
 <div class="barinfo">
- <span class="sec" id="scope">🆕 Novo · últimas 2 semanas</span>
+ <span class="sec" id="scope">🆕 Novo · últimos 10 dias</span>
  <span class="shown" id="shown"></span>
 </div>
 <div class="grid" id="timeline">
