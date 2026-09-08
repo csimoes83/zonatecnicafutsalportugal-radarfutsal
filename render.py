@@ -202,7 +202,7 @@ def render(itens, por_fonte, data, ok, nfeeds):
  body.locked{{overflow:hidden}}
  @media(max-width:560px){{.stamp{{display:none}} .brand{{font-size:17px}}}}
 </style></head><body>
-<div id="gate"><div class="box">
+<div id="gate" class="hidden"><div class="box">
  <div style="font-size:36px">🏐🔒</div>
  <h2>Radar <b>Futsal</b></h2>
  <p>Painel privado da equipa.<br>Introduz a palavra-passe.</p>
@@ -298,8 +298,7 @@ def render(itens, por_fonte, data, ok, nfeeds):
  var g=document.getElementById('gate'),pw=document.getElementById('gpw'),
      er=document.getElementById('gerr'),b=document.getElementById('gbtn');
  function unlock(){{g.classList.add('hidden');document.body.classList.remove('locked');}}
- if(localStorage.getItem('radar_ok')==='1'){{unlock();}}
- else{{document.body.classList.add('locked');setTimeout(function(){{pw.focus();}},50);}}
+ unlock();  // painel PUBLICO — cadeado removido 2026-09-08
  async function sha(s){{
   var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
   return Array.from(new Uint8Array(buf)).map(function(x){{return x.toString(16).padStart(2,'0');}}).join('');
