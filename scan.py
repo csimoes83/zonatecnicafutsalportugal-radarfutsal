@@ -132,6 +132,28 @@ RUIDO = re.compile(
     r"gin[áa]stica|patinagem|triatlo|\bp[óo]lo aqu[áa]tico|badminton|karat[ée]|jud[oó]",
     re.I)
 
+# Veto de FUTEBOL 11 — sinais que NÃO existem em futsal (evita fugas via Barça/Champions/LaLiga).
+# NÃO listar "serie a" (liga italiana de futsal) nem "fútbol sala"/"futsal".
+FUTEBOL = re.compile(
+    r"\blaliga\b|\bla liga\b|primeira liga|premier league|bundesliga|ligue 1|"
+    r"libertadores|brasileir[ãa]o|raphinha|lewandowski|mbapp|vin[íi]cius|bellingham|"
+    r"\byamal\b|\bgavi\b|\bpedri\b|cubars[ií]|ter stegen|real madrid|atl[ée]tico de madrid|"
+    r"defensa del|delantero|centrocampista",
+    re.I)
+def eh_futebol(it):
+    t = (it.get("title", "") or "")
+    if FUTEBOL.search(t):
+        return True
+    u = (it.get("link", "") or it.get("url", "") or "").lower()
+    tl = t.lower()
+    # jornais PT (Record/A Bola/O Jogo) arrumam FUTSAL sob /futebol/ no URL:
+    # só vetar por URL se NEM o título NEM o URL tiverem marca de futsal.
+    tem_futsal = any(m in tl for m in ("futsal", "fútbol sala", "futbol sala", "calcio a 5", "sala")) \
+        or "futsal" in u or "futbol-sala" in u or "sala" in u
+    if not tem_futsal and re.search(r"/futebol/|/futbol/|uefachampionsleague", u):
+        return True
+    return False
+
 # prioridade editorial do Carlos (PT + PT no estrangeiro + Placard + relevante)
 PRIO_PT = re.compile(
     r"benfica|sporting|braga|porto|fc porto|leões porto salvo|el[ée]ctrico|torreense|fund[ãa]o|"
@@ -633,7 +655,7 @@ def main():
         for it in ig_itens:
             if not it["when"] or it["when"] < corte:
                 continue
-            if RUIDO.search(it["title"]):
+            if RUIDO.search(it["title"]) or eh_futebol(it):
                 continue
             if estrangeiro_corta(it):
                 continue  # clube estrangeiro sem relevância (não Champions/PT/LNF/seleção/saída)
@@ -649,7 +671,7 @@ def main():
         for it in fb_itens:
             if not it["when"] or it["when"] < corte:
                 continue
-            if RUIDO.search(it["title"]):
+            if RUIDO.search(it["title"]) or eh_futebol(it):
                 continue  # corta outras modalidades (basquete, andebol...) e ruído
             frases = [m.group(0).lower() for m in NOME_RE.finditer(it["title"])]
             if proprio and any(f in proprio for f in frases if len(f) >= 16):
@@ -662,7 +684,7 @@ def main():
     for it in x_cache_itens():
         if not it["when"] or it["when"] < corte_x:
             continue
-        if RUIDO.search(it["title"]):
+        if RUIDO.search(it["title"]) or eh_futebol(it):
             continue
         frases = [m.group(0).lower() for m in NOME_RE.finditer(it["title"])]
         if proprio and any(f in proprio for f in frases if len(f) >= 16):
@@ -683,7 +705,7 @@ def main():
         for it in parse_feed(name, raw):
             if not it["when"] or it["when"] < corte_f:
                 continue
-            if RUIDO.search(it["title"]):
+            if RUIDO.search(it["title"]) or eh_futebol(it):
                 continue
             if req and not req.search(it["title"]):
                 continue
