@@ -152,7 +152,7 @@ def render(itens, por_fonte, data, ok, nfeeds):
  .refresh{{padding:9px 14px;border-radius:11px;border:1px solid var(--acc);background:transparent;
   color:var(--acc);font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap}}
  .refresh:active{{transform:scale(.96)}}
- .chips{{display:flex;gap:2px;margin-top:12px;overflow-x:auto;padding:0;border-bottom:1px solid var(--line);-webkit-overflow-scrolling:touch;scrollbar-width:none}}
+ .chips{{display:flex;flex-wrap:wrap;gap:2px 6px;margin-top:12px;padding:0;border-bottom:1px solid var(--line)}}
  .chips::-webkit-scrollbar{{display:none}}
  .chip{{display:inline-flex;align-items:center;gap:7px;padding:10px 15px;border:0;border-bottom:2.5px solid transparent;margin-bottom:-1px;
   background:transparent;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.14s}}
@@ -287,8 +287,13 @@ def render(itens, por_fonte, data, ok, nfeeds):
  document.querySelectorAll('.chip').forEach(function(ch){{
   ch.addEventListener('click',function(){{
    document.querySelectorAll('.chip').forEach(function(x){{x.classList.remove('active')}});
-   ch.classList.add('active');apply();}});}});
- apply();  // arranca no chip activo (Tudo por defeito)
+   ch.classList.add('active');try{{localStorage.setItem('radar_tab',ch.dataset.f);}}catch(e){{}}apply();}});}});
+ // restaurar a aba escolhida (persiste no auto-refresh de 5 min)
+ try{{var _t=localStorage.getItem('radar_tab');
+  if(_t){{var _c=[].slice.call(document.querySelectorAll('.chip')).filter(function(x){{return x.dataset.f===_t;}})[0];
+   if(_c){{document.querySelectorAll('.chip').forEach(function(x){{x.classList.remove('active')}});_c.classList.add('active');}}}}
+ }}catch(e){{}}
+ apply();  // arranca no chip guardado (ou Tudo por defeito)
  setInterval(function(){{location.reload(true);}}, 5*60*1000);
 }})();
 </script>
