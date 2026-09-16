@@ -708,7 +708,10 @@ def main():
             if RUIDO.search(it["title"]) or eh_futebol(it):
                 continue
             if req and not req.search(it["title"]):
-                continue
+                # imprensa: aceitar tambem itens de SECCAO de futsal no URL
+                # (titulos sem a palavra "futsal", ex.: sancoes de jogadores no /futebol/futsal/)
+                if not (req is FUTSAL_RE and "/futsal" in (it.get("link", "") or "").lower()):
+                    continue
             if estrangeiro_corta(it):
                 continue  # clube estrangeiro sem relevância (não Champions/PT/LNF/seleção/saída)
             por_fonte.setdefault(name, []).append(it)  # p/ tabelas Por fonte
